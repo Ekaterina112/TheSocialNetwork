@@ -1,0 +1,16 @@
+
+
+.profile {
+    grid-area: c;
+
+}
+.avatar {
+    color: darkseagreen;
+}
+.item {
+    color: blanchedalmond;
+    font-family: "Bookman Old Style";
+}
+.change {
+    color: red;
+}

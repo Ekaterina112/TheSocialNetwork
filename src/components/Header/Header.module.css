@@ -1,0 +1,8 @@
+
+
+.header {
+    color: wheat;
+    grid-area: h;
+    background-color: black;
+    font-palette: light;
+}
