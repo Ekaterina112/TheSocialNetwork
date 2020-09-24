@@ -8,24 +8,30 @@ import {BrowserRouter} from 'react-router-dom';
 
 type PropsType ={
     postData: Array<PostDataType>
-    addPosts:(mess:string)=>void
+    addPosts:()=>void
+    newPostText: string
+    upDateNewPostText: (newText:string)=> void
 }
 
 
 const MyPosts = (props:PropsType) => {
-    let posts = props.postData.map((p:any) => <Post message={p.message} count={p.count}/>)
+    let posts = props.postData.map((p) => <Post key={p.id} message={p.message} count={p.count}/>)
 
     let newPostElement= React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
+            props.addPosts()
+            props.upDateNewPostText(" ")
+    }
+    let onPostChange =()=> {
+        debugger
         if (newPostElement.current) {
-            props.addPosts(newPostElement.current.value)
-            newPostElement.current.value=" "
+            props.upDateNewPostText(newPostElement.current.value)
         }
     }
     return  <div>
         <div> my posts
             <div>
-                <textarea ref={newPostElement} />
+                <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText} />
             </div>
             <div>
 
