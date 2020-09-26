@@ -3,14 +3,13 @@ import React from 'react';
 import '../../../App.css';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostDataType, ProfilePageType} from '../../redux/state';
+import {ActionTypes, PostDataType, ProfilePageType} from '../../redux/state';
 import {BrowserRouter} from 'react-router-dom';
 
 type PropsType ={
     postData: Array<PostDataType>
-    addPosts:()=>void
+    dispatch: (action:ActionTypes) => void
     newPostText: string
-    upDateNewPostText: (newText:string)=> void
 }
 
 
@@ -18,14 +17,13 @@ const MyPosts = (props:PropsType) => {
     let posts = props.postData.map((p) => <Post key={p.id} message={p.message} count={p.count}/>)
 
     let newPostElement= React.createRef<HTMLTextAreaElement>()
-    const addPost = () => {
-            props.addPosts()
-            props.upDateNewPostText(" ")
+    let addPost = () => {
+            props.dispatch({type:'ADD-POSTS'})
     }
     let onPostChange =()=> {
-        debugger
         if (newPostElement.current) {
-            props.upDateNewPostText(newPostElement.current.value)
+            let text = newPostElement.current.value
+            props.dispatch({type:'UP-DATE-NEW-POST-TEXT',newText:text})
         }
     }
     return  <div>

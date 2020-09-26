@@ -27,13 +27,21 @@ export type StoreType = {
     _state: RootStateType,
     getState: () => RootStateType,
     _callSubscriber: (_state: RootStateType) => void,
-    addPosts: () => void
-    upDateNewPostText: (newText: string) => void,
-    subscribe: (observer: () => void) => void
+    subscribe: (observer: () => void) => void,
+    dispatch: (action:ActionTypes) => void
+}
+type AddPostsActionType = {
+    type: 'ADD-POSTS', //string
+
+}
+type UpDateNewPostTextActionType = {
+    type: 'UP-DATE-NEW-POST-TEXT', //string
+    newText:string
 }
 
+export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType
 
-const store: StoreType = {
+let store: StoreType = {
     _state: {
         profilePage: {
             postData: [
@@ -61,32 +69,35 @@ const store: StoreType = {
 
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber() {
         console.log('state changed')
     },
-    addPosts() {
-        let newPost: PostDataType = {
-            id: 4,
-            message: this._state.profilePage.newPostText
-            , count: 0
-        }
-        this._state.profilePage.postData.push(newPost)
-        this._callSubscriber(this._state)
-    },
-    upDateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
+
+    getState() {
+        return this._state
     },
     subscribe(listener) {
         this._callSubscriber = listener
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POSTS') {
+            let newPost: PostDataType = {
+                id: 4,
+                message: this._state.profilePage.newPostText
+                , count: 0
+            }
+            this._state.profilePage.postData.push(newPost)
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UP-DATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
+
+
     }
 }
 
 // @ts-ignore
 window.store = store
-
-
 export default store
