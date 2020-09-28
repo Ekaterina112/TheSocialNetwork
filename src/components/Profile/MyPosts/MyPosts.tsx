@@ -3,7 +3,13 @@ import React from 'react';
 import '../../../App.css';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {ActionTypes, PostDataType, ProfilePageType} from '../../redux/state';
+import {
+    ActionTypes,
+    addPostCreator,
+    PostDataType,
+    ProfilePageType,
+    upDateNewPostTextCreator
+} from '../../redux/state';
 import {BrowserRouter} from 'react-router-dom';
 
 type PropsType ={
@@ -18,12 +24,12 @@ const MyPosts = (props:PropsType) => {
 
     let newPostElement= React.createRef<HTMLTextAreaElement>()
     let addPost = () => {
-            props.dispatch({type:'ADD-POSTS'})
+            props.dispatch(addPostCreator())
     }
     let onPostChange =()=> {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch({type:'UP-DATE-NEW-POST-TEXT',newText:text})
+            props.dispatch(upDateNewPostTextCreator(text))
         }
     }
     return  <div>

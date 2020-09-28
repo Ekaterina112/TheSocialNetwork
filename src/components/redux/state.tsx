@@ -1,5 +1,15 @@
+
+const ADD_POST='ADD-POST';
+const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
+const UP_DATE_NEW_MESSAGE_TEXT= 'UP-DATE-NEW-MESSAGE-TEXT';
+const SEND_MESSAGE= 'SEND-MESSAGE'
+
+
+
+
 export type MessageDataType = {
     message: string
+    id?: number
 }
 export type DialogItemDataType = {
     name: string
@@ -13,6 +23,7 @@ export type PostDataType = {
 export type   MessagePageType = {
     dialogItemsData: Array<DialogItemDataType>
     messageData: Array<MessageDataType>
+    newMessageText:string
 }
 export type   ProfilePageType = {
     postData: Array<PostDataType>
@@ -38,8 +49,15 @@ type UpDateNewPostTextActionType = {
     type: 'UP-DATE-NEW-POST-TEXT', //string
     newText:string
 }
+type SendMessageActionType = {
+    type: 'SEND-MESSAGE', //string
+}
+type UpDateNewMessageTextActionType = {
+    type: 'UP-DATE-NEW-MESSAGE-TEXT', //string
+    body:string
+}
 
-export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType
+export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType | UpDateNewMessageTextActionType | SendMessageActionType
 
 let store: StoreType = {
     _state: {
@@ -53,20 +71,20 @@ let store: StoreType = {
         },
         messagePage: {
             dialogItemsData: [
-                {name: 'Kate', id: 1},
-                {name: 'Tom', id: 2},
-                {name: 'Kristi', id: 3},
-                {name: 'Mike', id: 4},
-                {name: 'Jeny', id: 5}
+                {id: 1,name: 'Kate'},
+                {id: 2,name: 'Tom'},
+                {id: 3,name: 'Kristi'},
+                {id: 4, name: 'Mike'},
+                {id: 5, name: 'Jeny' }
             ],
             messageData: [
-                {message: 'Hi'},
-                {message: 'What\'s up?'},
-                {message: 'Well'},
-                {message: 'Good'},
-                {message: 'wOoOo'}
-            ]
-
+                {id: 1, message: 'Hi'},
+                {id: 2, message: 'What\'s up?'},
+                {id: 3, message: 'Well'},
+                {id: 4, message: 'Good'},
+                {id: 5, message: 'wOoOo'}
+            ],
+newMessageText: ''
         }
     },
     _callSubscriber() {
@@ -92,11 +110,25 @@ let store: StoreType = {
         } else if (action.type === 'UP-DATE-NEW-POST-TEXT') {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber(this._state)
-        }
-
-
+        } else if (action.type === 'UP-DATE-NEW-MESSAGE-TEXT') {
+            this._state.messagePage.newMessageText=action.body
+            this._callSubscriber(this._state )
+        } else if (action.type === 'SEND-MESSAGE') {
+            let body= this._state.messagePage.newMessageText
+            this._state.messagePage.newMessageText = " "
+            this._state.messagePage.messageData.push({id:6, message:body})
+            this._callSubscriber(this._state )
+    }
     }
 }
+
+export  const addPostCreator = ():AddPostsActionType =>({type: 'ADD-POSTS'})
+export const upDateNewPostTextCreator = (text:string):UpDateNewPostTextActionType => ({
+        type:'UP-DATE-NEW-POST-TEXT',newText:text})
+
+export const sendMessageCreator = ():SendMessageActionType =>({type:'SEND-MESSAGE'})
+export const upDateNewMessageTextCreator = (b:string):UpDateNewMessageTextActionType => ({
+    type:'UP-DATE-NEW-MESSAGE-TEXT', body:b})
 
 // @ts-ignore
 window.store = store
