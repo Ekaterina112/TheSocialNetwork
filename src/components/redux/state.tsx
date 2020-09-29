@@ -1,10 +1,5 @@
-
-const ADD_POST='ADD-POST';
-const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
-const UP_DATE_NEW_MESSAGE_TEXT= 'UP-DATE-NEW-MESSAGE-TEXT';
-const SEND_MESSAGE= 'SEND-MESSAGE'
-
-
+import profileReducer from './ProfilePageReducer';
+import messageReducer from './MessagePageReducer';
 
 
 export type MessageDataType = {
@@ -41,18 +36,18 @@ export type StoreType = {
     subscribe: (observer: () => void) => void,
     dispatch: (action:ActionTypes) => void
 }
-type AddPostsActionType = {
+ export type AddPostsActionType = {
     type: 'ADD-POSTS', //string
 
 }
-type UpDateNewPostTextActionType = {
+ export type UpDateNewPostTextActionType = {
     type: 'UP-DATE-NEW-POST-TEXT', //string
     newText:string
 }
-type SendMessageActionType = {
+export type SendMessageActionType = {
     type: 'SEND-MESSAGE', //string
 }
-type UpDateNewMessageTextActionType = {
+export type UpDateNewMessageTextActionType = {
     type: 'UP-DATE-NEW-MESSAGE-TEXT', //string
     body:string
 }
@@ -99,36 +94,13 @@ newMessageText: ''
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POSTS') {
-            let newPost: PostDataType = {
-                id: 4,
-                message: this._state.profilePage.newPostText
-                , count: 0
-            }
-            this._state.profilePage.postData.push(newPost)
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UP-DATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UP-DATE-NEW-MESSAGE-TEXT') {
-            this._state.messagePage.newMessageText=action.body
-            this._callSubscriber(this._state )
-        } else if (action.type === 'SEND-MESSAGE') {
-            let body= this._state.messagePage.newMessageText
-            this._state.messagePage.newMessageText = " "
-            this._state.messagePage.messageData.push({id:6, message:body})
-            this._callSubscriber(this._state )
-    }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagePage = messageReducer(this._state.messagePage, action)
+        this._callSubscriber(this._state)
     }
 }
 
-export  const addPostCreator = ():AddPostsActionType =>({type: 'ADD-POSTS'})
-export const upDateNewPostTextCreator = (text:string):UpDateNewPostTextActionType => ({
-        type:'UP-DATE-NEW-POST-TEXT',newText:text})
 
-export const sendMessageCreator = ():SendMessageActionType =>({type:'SEND-MESSAGE'})
-export const upDateNewMessageTextCreator = (b:string):UpDateNewMessageTextActionType => ({
-    type:'UP-DATE-NEW-MESSAGE-TEXT', body:b})
 
 // @ts-ignore
 window.store = store

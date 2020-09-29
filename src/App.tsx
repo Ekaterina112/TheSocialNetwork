@@ -11,9 +11,10 @@ import Settings from './components/Settings/Settings';
 import store, {ActionTypes, RootStateType, StoreType} from './components/redux/state';
 
 type PropsType = {
+    store: StoreType
     state: RootStateType
     dispatch: (action:ActionTypes) => void
-    store: StoreType
+
 }
 
 

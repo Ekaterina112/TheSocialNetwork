@@ -3,14 +3,8 @@ import React from 'react';
 import '../../../App.css';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {
-    ActionTypes,
-    addPostCreator,
-    PostDataType,
-    ProfilePageType,
-    upDateNewPostTextCreator
-} from '../../redux/state';
-import {BrowserRouter} from 'react-router-dom';
+import {addPostCreator, upDateNewPostTextCreator} from '../../redux/ProfilePageReducer';
+import {ActionTypes, PostDataType} from '../../redux/state';
 
 type PropsType ={
     postData: Array<PostDataType>
