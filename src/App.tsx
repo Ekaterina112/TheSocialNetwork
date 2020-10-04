@@ -10,12 +10,10 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import store from './components/redux/redux-store';
 import {ActionTypes, RootStateType, StoreType} from './components/redux/store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 type PropsType = {
     store: StoreType
-    state: RootStateType
-    dispatch: (action:ActionTypes) => void
-
 }
 
 
@@ -25,12 +23,8 @@ const App = (props: PropsType) => {
             <Header/>
            <Nav/>
            <div className='app-wrapper-all'>
-               <Route path ='/dialogs' render={()=> <Dialogs store={props.store}  messagePage={props.state.messagePage} />}/>
-               <Route path = '/profile' render={()=> <Profile
-                   profilePage={props.state.profilePage}
-                   dispatch={props.dispatch}
-
-               />} />
+               <Route path ='/dialogs' render={()=> <DialogsContainer store={props.store}/>}/>
+               <Route path = '/profile' render={()=> <Profile store={props.store}/>} />
                <Route path ='/news' render={()=> <News/>}/>
                <Route path ='/music' render={()=> <Music/>}/>
                <Route path ='/settings' render={()=> <Settings/>}/>

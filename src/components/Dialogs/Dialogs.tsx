@@ -7,22 +7,25 @@ import {MessagePageType, StoreType} from '../redux/store';
 
 type DialogsPropsType = {
     messagePage: MessagePageType
-    store:StoreType
+    upDateNewMessageText:(body:string)=>void
+    sendMessage:() =>void
 }
 
 
 const Dialogs = (props: DialogsPropsType) => {
-    let dialogArr = props.messagePage.dialogItemsData.map((d) => <DialogsItems name={d.name} id={d.id}/>)
-    let messageArr = props.messagePage.messageData.map((m) => <MessagesItems message={m.message}/>)
-    let newMessageBody = props.messagePage.newMessageText
+    let state=props.messagePage
+
+    let dialogArr = state.dialogItemsData.map((d) => <DialogsItems name={d.name} id={d.id}/>)
+    let messageArr = state.messageData.map((m) => <MessagesItems message={m.message}/>)
+    let newMessageBody = state.newMessageText
 
 
     const onSendMessageClick = () => {
-        props.store.dispatch(sendMessageCreator())
+        props.sendMessage()
     }
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
         let body= e.target.value
-        props.store.dispatch(upDateNewMessageTextCreator(body))
+        props.upDateNewMessageText(body)
     }
     return (
         <div className={s.allDialogs}>

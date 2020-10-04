@@ -36,11 +36,11 @@ export type StoreType = {
     subscribe: (observer: () => void) => void,
     dispatch: (action:ActionTypes) => void
 }
- export type AddPostsActionType = {
+export type AddPostsActionType = {
     type: 'ADD-POSTS', //string
 
 }
- export type UpDateNewPostTextActionType = {
+export type UpDateNewPostTextActionType = {
     type: 'UP-DATE-NEW-POST-TEXT', //string
     newText:string
 }

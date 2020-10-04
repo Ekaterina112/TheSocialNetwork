@@ -1,4 +1,3 @@
-
 import React from 'react';
 import '../../../App.css';
 import classes from './MyPosts.module.css'
@@ -8,8 +7,10 @@ import {ActionTypes, PostDataType} from '../../redux/store';
 
 type PropsType ={
     postData: Array<PostDataType>
-    dispatch: (action:ActionTypes) => void
-    newPostText: string
+   /* dispatch: (action:ActionTypes) => void*/
+    newPostText ?: string
+    addPost:()=>void
+    upDateNewPostText:(text:any) => void
 }
 
 
@@ -18,21 +19,21 @@ const MyPosts = (props:PropsType) => {
 
     let newPostElement= React.createRef<HTMLTextAreaElement>()
     let addPost = () => {
-            props.dispatch(addPostCreator())
+        props.addPost();
     }
     let onPostChange =()=> {
-        if (newPostElement.current) {
+            // @ts-ignore
             let text = newPostElement.current.value
-            props.dispatch(upDateNewPostTextCreator(text))
-        }
+            props.upDateNewPostText(text)
     }
     return  <div>
         <div> my posts
             <div>
-                <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText} />
+                <textarea ref={newPostElement}
+                          onChange={onPostChange}
+                          value={props.newPostText} />
             </div>
             <div>
-
                 <button onClick={addPost} >Add post</button>
                 <button>Remove</button>
             </div>
