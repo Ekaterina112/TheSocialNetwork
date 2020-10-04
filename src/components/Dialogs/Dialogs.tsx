@@ -7,7 +7,7 @@ import {MessagePageType, StoreType} from '../redux/store';
 
 type DialogsPropsType = {
     messagePage: MessagePageType
-    upDateNewMessageText:(body:string)=>void
+    upDateNewMessageText:(body:string)=>void //tyt pravilno ili net
     sendMessage:() =>void
 }
 

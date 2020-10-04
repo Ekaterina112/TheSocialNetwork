@@ -1,9 +1,6 @@
 import React, {ChangeEvent} from 'react';
-import s from './Dialogs.module.css'
-import MessagesItems from './MessagesItems/MessagesItems';
-import DialogsItems from './DialogsItems/DialogsItems';
 import {upDateNewMessageTextCreator, sendMessageCreator,} from '../redux/MessagePageReducer';
-import {MessagePageType, StoreType} from '../redux/store';
+import {StoreType} from '../redux/store';
 import Dialogs from './Dialogs';
 
 type DialogsPropsType = {
@@ -17,8 +14,8 @@ const DialogsContainer = (props: DialogsPropsType) => {
     const onSendMessageClick = () => {
         props.store.dispatch(sendMessageCreator())
     }
-    const onNewMessageChange = (body:any) => {
-        props.store.dispatch(upDateNewMessageTextCreator(body))
+    const onNewMessageChange = (messageText:string) => {
+        props.store.dispatch(upDateNewMessageTextCreator(messageText))
     }
     return  <Dialogs
         upDateNewMessageText={onNewMessageChange}

@@ -8,14 +8,12 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import store from './components/redux/redux-store';
-import {ActionTypes, RootStateType, StoreType} from './components/redux/store';
+import { StoreType} from './components/redux/store';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 type PropsType = {
     store: StoreType
 }
-
 
 const App = (props: PropsType) => {
     return (
