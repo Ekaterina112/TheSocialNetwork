@@ -8,7 +8,8 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import store, {ActionTypes, RootStateType, StoreType} from './components/redux/state';
+import store from './components/redux/redux-store';
+import {ActionTypes, RootStateType, StoreType} from './components/redux/store';
 
 type PropsType = {
     store: StoreType
@@ -24,7 +25,7 @@ const App = (props: PropsType) => {
             <Header/>
            <Nav/>
            <div className='app-wrapper-all'>
-               <Route path ='/dialogs' render={()=> <Dialogs store={store}  messagePage={props.state.messagePage} />}/>
+               <Route path ='/dialogs' render={()=> <Dialogs store={props.store}  messagePage={props.state.messagePage} />}/>
                <Route path = '/profile' render={()=> <Profile
                    profilePage={props.state.profilePage}
                    dispatch={props.dispatch}

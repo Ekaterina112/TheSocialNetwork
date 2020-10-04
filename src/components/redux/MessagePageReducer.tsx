@@ -4,13 +4,32 @@ import {
     PostDataType,
     SendMessageActionType,
     UpDateNewMessageTextActionType
-} from './state';
+} from './store';
 
 const UP_DATE_NEW_MESSAGE_TEXT= 'UP-DATE-NEW-MESSAGE-TEXT';
 const SEND_MESSAGE= 'SEND-MESSAGE'
 
 
-const messageReducer=(state: MessagePageType, action:ActionTypes) => {
+
+let initialState: MessagePageType = {
+    dialogItemsData: [
+        {id: 1,name: 'Kate'},
+        {id: 2,name: 'Tom'},
+        {id: 3,name: 'Kristi'},
+        {id: 4, name: 'Mike'},
+        {id: 5, name: 'Jeny' }
+    ],
+    messageData: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'What\'s up?'},
+        {id: 3, message: 'Well'},
+        {id: 4, message: 'Good'},
+        {id: 5, message: 'wOoOo'}
+    ],
+    newMessageText: ''
+}
+
+const messageReducer=(state=initialState, action:ActionTypes) => {
 
    if (action.type === 'UP-DATE-NEW-MESSAGE-TEXT') {
        state.newMessageText=action.body

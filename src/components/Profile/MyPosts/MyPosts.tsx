@@ -4,7 +4,7 @@ import '../../../App.css';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post';
 import {addPostCreator, upDateNewPostTextCreator} from '../../redux/ProfilePageReducer';
-import {ActionTypes, PostDataType} from '../../redux/state';
+import {ActionTypes, PostDataType} from '../../redux/store';
 
 type PropsType ={
     postData: Array<PostDataType>

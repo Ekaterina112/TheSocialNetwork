@@ -4,7 +4,7 @@ import '../../App.css';
 import c from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {RootStateType, ProfilePageType, ActionTypes} from '../redux/state';
+import {RootStateType, ProfilePageType, ActionTypes} from '../redux/store';
 
 type PropsType ={
     profilePage: ProfilePageType

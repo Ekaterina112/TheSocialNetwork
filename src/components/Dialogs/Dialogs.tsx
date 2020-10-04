@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import MessagesItems from './MessagesItems/MessagesItems';
 import DialogsItems from './DialogsItems/DialogsItems';
 import {upDateNewMessageTextCreator, sendMessageCreator,} from '../redux/MessagePageReducer';
-import {MessagePageType, StoreType} from '../redux/state';
+import {MessagePageType, StoreType} from '../redux/store';
 
 type DialogsPropsType = {
     messagePage: MessagePageType

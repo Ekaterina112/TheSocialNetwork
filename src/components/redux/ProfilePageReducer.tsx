@@ -1,13 +1,22 @@
-
-import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './state';
-
+import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './store';
 
 
 const ADD_POST='ADD-POST';
 const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
 
 
-const profileReducer=(state: ProfilePageType, action:ActionTypes) => {
+
+ let initialState: ProfilePageType = {
+         postData: [
+             {id: 1, message: 'Hello', count: 100},
+             {id: 2, message: 'How are you', count: 99},
+             {id: 3, message: 'I am fine', count: 98},
+         ],
+         newPostText: 'it-kamasutra.com'
+     }
+
+
+const profileReducer=(state =initialState, action:ActionTypes) => {
     if (action.type === 'ADD-POSTS') {
         let newPost: PostDataType = {
             id: 4,
