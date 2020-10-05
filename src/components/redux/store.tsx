@@ -54,7 +54,7 @@ export type UpDateNewMessageTextActionType = {
 
 export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType | UpDateNewMessageTextActionType | SendMessageActionType
 
-let store: StoreType = {
+/*let store: StoreType = {
     _state: {
         profilePage: {
             postData: [
@@ -98,10 +98,10 @@ newMessageText: ''
         this._state.messagePage = messageReducer(this._state.messagePage, action)
         this._callSubscriber(this._state)
     }
-}
+}*/
 
 
 
 // @ts-ignore
-window.store = store
-export default store
+/*window.store = store
+export default store*/

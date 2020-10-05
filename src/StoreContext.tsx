@@ -1,8 +1,14 @@
 import React from 'react';
-import store, {StoreType} from './components/redux/store';
-import {BrowserRouter} from 'react-router-dom';
+import {StoreType} from './components/redux/store';
+import store from './components/redux/redux-store';
+
 
 const StoreContext = React.createContext({} as StoreType)
+
+type ProviderType = {
+    store: StoreType
+    children: React.ReactNode
+}
 
  export  const Provider = (props:any) =>  {
     return  <StoreContext.Provider value={props.store}>
