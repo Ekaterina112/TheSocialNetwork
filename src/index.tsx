@@ -3,24 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
-import StoreContext, {Provider} from './StoreContext';
 import store from './components/redux/redux-store';
+import {Provider} from 'react-redux';
 
 
-export let rerenderEntireTree = () => {
-    debugger
-    ReactDOM.render(
-        <BrowserRouter>
-            <Provider store={store}>
+
+/*ReactDOM.render(
+    <BrowserRouter>
+        <Provider store={store}>
             <App/>
-                </Provider>
-        </BrowserRouter>,
-        document.getElementById('root')
-    );
-}
+        </Provider>
+    </BrowserRouter>,
+    document.getElementById('root')
+);*/
 
-rerenderEntireTree()
+
+ export let rerenderEntireTree = () => {
+     ReactDOM.render(<BrowserRouter>
+             <Provider store={store}> {/*//оборачиваем провайдером и передаем store, created by store create*/}
+                <App/>
+           </Provider>
+       </BrowserRouter>,
+       document.getElementById('root')
+  );
+ }
+
+ rerenderEntireTree()
 store.subscribe(()=>{
-    let state=store.getState
+     let state=store.getState
     rerenderEntireTree()}) //need get state
 

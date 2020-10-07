@@ -1,6 +1,5 @@
-import profileReducer from './ProfilePageReducer';
-import messageReducer from './MessagePageReducer';
 
+                                  //SAVE SOME TYPES //ONLY FOR TYPES
 
 export type MessageDataType = {
     message: string
@@ -34,7 +33,7 @@ export type StoreType = {
     getState: () => RootStateType,
     _callSubscriber: (_state: RootStateType) => void,
     subscribe: (observer: () => void) => void,
-    dispatch: (action:ActionTypes) => void
+    dispatch: DispatchType
 }
 export type AddPostsActionType = {
     type: 'ADD-POSTS', //string
@@ -53,6 +52,7 @@ export type UpDateNewMessageTextActionType = {
 }
 
 export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType | UpDateNewMessageTextActionType | SendMessageActionType
+export type DispatchType = {dispatch: (action:ActionTypes) => void}
 
 /*let store: StoreType = {
     _state: {
@@ -99,8 +99,6 @@ newMessageText: ''
         this._callSubscriber(this._state)
     }
 }*/
-
-
 
 // @ts-ignore
 /*window.store = store
