@@ -8,28 +8,28 @@ import {Provider} from 'react-redux';
 
 
 
-/*ReactDOM.render(
+ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
             <App/>
         </Provider>
     </BrowserRouter>,
     document.getElementById('root')
-);*/
+);
 
 
- export let rerenderEntireTree = () => {
+ /*export let rerenderEntireTree = () => {
      ReactDOM.render(<BrowserRouter>
-             <Provider store={store}> {/*//оборачиваем провайдером и передаем store, created by store create*/}
+             <Provider store={store}> {/!*!//оборачиваем провайдером и передаем store, created by store create*!/}
                 <App/>
            </Provider>
        </BrowserRouter>,
        document.getElementById('root')
   );
- }
+ }*/
 
- rerenderEntireTree()
-store.subscribe(()=>{
+ /*rerenderEntireTree()*/ //do function 'connect'
+/*store.subscribe(()=>{
      let state=store.getState
-    rerenderEntireTree()}) //need get state
+    rerenderEntireTree()}) *///need get state
 

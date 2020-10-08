@@ -28,14 +28,14 @@ import {Dispatch} from 'redux';
         </StoreContext.Consumer>
     )
 }*/
-let mapStateToProps = (state:RootStateType) =>{
+const mapStateToProps = (state:RootStateType) =>{
     return {
         postData: state.profilePage.postData,
         newPostText:state.profilePage.newPostText
     }
 }
 
-let mapDispatchToProps = (dispatch:Dispatch) => {
+const mapDispatchToProps = (dispatch:Dispatch) => {
     return { upDateNewPostText: (text: string) => {
             let action = upDateNewPostTextCreator(text)
             dispatch(action)},

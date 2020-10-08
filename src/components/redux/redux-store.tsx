@@ -10,7 +10,8 @@ let reducers= combineReducers({    //as a state
 
 let store = createStore(reducers)
 
-
+// @ts-ignore  //save store global
+window.store =store
 export default store
 
 

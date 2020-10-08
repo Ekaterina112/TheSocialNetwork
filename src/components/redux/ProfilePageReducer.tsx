@@ -1,7 +1,7 @@
 import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './store';
 
 
-const ADD_POST='ADD-POST';
+const ADD_POST='ADD-POST'; //is it need ???
 const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
 
 
@@ -17,17 +17,27 @@ const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
 
 
 const profileReducer=(state =initialState, action:ActionTypes) => {
-    if (action.type === 'ADD-POSTS') {
-        let newPost: PostDataType = {
-            id: 4,
-            message: state.newPostText,
-            count: 0
+    switch (action.type) {
+        case 'ADD-POSTS': {
+            let newPost: PostDataType = {
+                id: 4,
+                message: state.newPostText,
+                count: 0
+            }
+            let stateCopy = {...state}
+            stateCopy.postData = [...state.postData]
+            stateCopy.postData.push(newPost)
+            stateCopy.newPostText = ''
+            return stateCopy
         }
-       state.postData.push(newPost)
-    } else if (action.type === 'UP-DATE-NEW-POST-TEXT') {
-        state.newPostText = action.newText
+        case 'UP-DATE-NEW-POST-TEXT': {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        }
+        default:
+            return state
     }
-    return state
 }
 
 export  const addPostCreator = ():AddPostsActionType =>({type: 'ADD-POSTS'})
