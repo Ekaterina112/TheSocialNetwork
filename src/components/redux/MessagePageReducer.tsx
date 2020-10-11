@@ -26,26 +26,27 @@ let initialState: MessagePageType = {
         {id: 4, message: 'Good'},
         {id: 5, message: 'wOoOo'}
     ],
-    newMessageText: ''
+    newMessageText:''
 }
 
 const messageReducer=(state=initialState, action:ActionTypes) => {
     switch (action.type) {
         case 'UP-DATE-NEW-MESSAGE-TEXT': {
-            let stateCopy = {...state}       //do deep copy only for elements which will be changed
-            stateCopy.newMessageText = action.body
-            return stateCopy
+            return {
+                ...state,
+                newMessageText: action.body   //do deep copy only for elements which will be changed
+            }
         }
         case 'SEND-MESSAGE': {
-            let stateCopy = {...state}
-            stateCopy.messageData = [...state.messageData]
-            let body = stateCopy.newMessageText
-            stateCopy.messageData.push({id: 6, message: body})
-            stateCopy.newMessageText = ' '
-            return stateCopy
+            let body = state.newMessageText
+            return {
+                ...state,
+                newMessageText: '',
+                messageData: [...state.messageData, {id: 6, message: body}]
+            }
         }
         default:
-            return state
+            return state //&&&&&&&&&&&&&&&&&&&&&&&&
     }
 }
    /*if (action.type === 'UP-DATE-NEW-MESSAGE-TEXT') {
