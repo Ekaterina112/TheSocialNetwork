@@ -19,13 +19,23 @@ const usersReducer=(state=initialState, action:ActionTypes) => {
         case FOLLOW: {
             return {
                 ...state,
-
+                usersData: state.usersData.map(u =>{
+                    if(u.id === action.userID) {
+                        return {...u, followed:true}
+                    }
+                    return u
+                })
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-
+                usersData: state.usersData.map(u =>{
+                    if(u.id === action.userID) {
+                        return {...u, followed:false}
+                    }
+                    return u
+                })
             }
         }
         default:
@@ -34,9 +44,8 @@ const usersReducer=(state=initialState, action:ActionTypes) => {
 }
 
 
-export const followAC = ():FollowActionType =>({type:FOLLOW})
-export const unfollowAC = ():UnFollowActionType => ({
-    type:UNFOLLOW})
+export const followAC = (userID:number):FollowActionType =>({type:FOLLOW, userID})
+export const unfollowAC = (userID:number):UnFollowActionType => ({type:UNFOLLOW, userID})
 
 
 export default usersReducer

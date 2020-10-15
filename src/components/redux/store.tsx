@@ -51,9 +51,11 @@ export type UpDateNewMessageTextActionType = {
 }
 export type FollowActionType = {
     type: 'FOLLOW', //string
+    userID:number
 }
 export type UnFollowActionType = {
     type: 'UNFOLLOW', //string
+    userID:number
 }
 export type ActionTypes =
     AddPostsActionType
