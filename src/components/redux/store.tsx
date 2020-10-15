@@ -1,5 +1,4 @@
-
-                                  //SAVE SOME TYPES //ONLY FOR TYPES
+//SAVE SOME TYPES //ONLY FOR TYPES
 
 export type MessageDataType = {
     message: string
@@ -17,7 +16,7 @@ export type PostDataType = {
 export type   MessagePageType = {
     dialogItemsData: Array<DialogItemDataType>
     messageData: Array<MessageDataType>
-    newMessageText:string
+    newMessageText: string
 }
 export type   ProfilePageType = {
     postData: Array<PostDataType>
@@ -41,18 +40,44 @@ export type AddPostsActionType = {
 }
 export type UpDateNewPostTextActionType = {
     type: 'UP-DATE-NEW-POST-TEXT', //string
-    newText:string
+    newText: string
 }
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE', //string
 }
 export type UpDateNewMessageTextActionType = {
     type: 'UP-DATE-NEW-MESSAGE-TEXT', //string
-    body:string
+    body: string
+}
+export type FollowActionType = {
+    type: 'FOLLOW', //string
+}
+export type UnFollowActionType = {
+    type: 'UNFOLLOW', //string
+}
+export type ActionTypes =
+    AddPostsActionType
+    | UpDateNewPostTextActionType
+    | UpDateNewMessageTextActionType
+    | SendMessageActionType
+    | FollowActionType
+    | UnFollowActionType
+
+export type DispatchType = { dispatch: (action: ActionTypes) => void }
+
+
+//for users page
+export type UsersData = {
+    id: number,
+    followed: boolean,
+    fullName: string,
+    status: string,
+    location: { city: string, country: string }
+}
+export type UsersPageType = {
+    usersData: Array<UsersData>
 }
 
-export type ActionTypes = AddPostsActionType | UpDateNewPostTextActionType | UpDateNewMessageTextActionType | SendMessageActionType
-export type DispatchType = {dispatch: (action:ActionTypes) => void}
 
 /*let store: StoreType = {
     _state: {
