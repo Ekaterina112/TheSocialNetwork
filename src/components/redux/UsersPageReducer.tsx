@@ -1,18 +1,25 @@
-import {ActionTypes, FollowActionType, UnFollowActionType, UsersPageType} from './store';
+import {ActionTypes, FollowActionType, SetUsersActionType, UnFollowActionType} from './types';
 
-
+export type UsersData = {
+    id: number,
+    followed: boolean,
+    fullName: string,
+    status: string,
+    location: { city: string, country: string }
+}
+export type UsersPageType = {
+    usersData: Array<UsersData>
+}
 const FOLLOW='FOLLOW'
 const UNFOLLOW='UNFOLLOW'
+const SET_USERS='SET-USERS'
 
 let initialState:UsersPageType= {
-    usersData: [
-        {id: 1, followed: true, fullName: 'Robin', status: 'Hi', location:{city:'NY', country:'USA'}},
-        {id: 2, followed: false, fullName: 'Ted', status: 'I love you', location:{city:'NY', country:'USA'}},
-        {id: 3, followed: true, fullName: 'Barney', status: 'Awesome', location:{city:'NY', country:'USA'}},
-        {id: 4, followed: false, fullName: 'Marshall', status: 'Lapushka', location:{city:'NY', country:'USA'}},
-        {id: 5, followed: true, fullName: 'Lily', status: 'okay', location:{city:'NY', country:'USA'} }
-    ]
+    usersData: []
 }
+//редьюсеры принимают инициилизонный стэйт и определенный экшион,
+// по названию экшиона определяютя действия, для изменения стэйта
+// и возвращается измененный стэйт
 
 const usersReducer=(state=initialState, action:ActionTypes) => {
     switch (action.type) {
@@ -38,14 +45,20 @@ const usersReducer=(state=initialState, action:ActionTypes) => {
                 })
             }
         }
+        case SET_USERS: {
+            return {
+                ...state,
+               usersData: [...state.usersData, ...action.usersData]
+            }
+        }
         default:
             return state
     }
 }
 
-
+//стреляет экшионы, это экшион креэйторы
 export const followAC = (userID:number):FollowActionType =>({type:FOLLOW, userID})
 export const unfollowAC = (userID:number):UnFollowActionType => ({type:UNFOLLOW, userID})
-
+export const setUsersAC = (usersData:any):SetUsersActionType => ({type:SET_USERS, usersData})
 
 export default usersReducer

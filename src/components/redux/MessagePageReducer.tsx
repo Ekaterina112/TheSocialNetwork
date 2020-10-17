@@ -4,7 +4,7 @@ import {
     PostDataType,
     SendMessageActionType,
     UpDateNewMessageTextActionType
-} from './store';
+} from './types';
 
 const UP_DATE_NEW_MESSAGE_TEXT= 'UP-DATE-NEW-MESSAGE-TEXT';
 const SEND_MESSAGE= 'SEND-MESSAGE'

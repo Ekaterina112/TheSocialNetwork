@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import {upDateNewMessageTextCreator, sendMessageCreator,} from '../redux/MessagePageReducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {RootStateType} from '../redux/store';
+import {RootStateType} from '../redux/types';
 import {Dispatch} from 'redux';
 
 

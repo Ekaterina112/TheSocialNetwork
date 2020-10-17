@@ -1,4 +1,4 @@
-import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './store';
+import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './types';
 
 
 const ADD_POST='ADD-POST'; //is it need ???

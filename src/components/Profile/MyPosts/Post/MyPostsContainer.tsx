@@ -2,7 +2,7 @@ import React from 'react';
 import {addPostCreator, upDateNewPostTextCreator} from '../../../redux/ProfilePageReducer';
 import MyPosts from '../MyPosts';
 import {connect} from 'react-redux';
-import {DispatchType, RootStateType} from '../../../redux/store';
+import {DispatchType, RootStateType} from '../../../redux/types';
 import {Dispatch} from 'redux';
 
 
