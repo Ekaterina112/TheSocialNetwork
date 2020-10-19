@@ -3,8 +3,9 @@ import {ActionTypes, FollowActionType, SetUsersActionType, UnFollowActionType} f
 export type UsersData = {
     id: number,
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
+    photos:string,
     location: { city: string, country: string }
 }
 export type UsersPageType = {
