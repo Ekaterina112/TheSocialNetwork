@@ -1,4 +1,4 @@
-import Users from './UsersClass';
+import Users from './Users';
 import {connect} from 'react-redux';
 import {followAC, setUsersAC, unfollowAC, UsersDataType} from '../redux/UsersPageReducer';
 import {Dispatch} from 'redux';
