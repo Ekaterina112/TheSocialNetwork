@@ -1,20 +1,20 @@
-import Users from './Users';
+import Users from './UsersClass';
 import {connect} from 'react-redux';
-import {followAC, setUsersAC, unfollowAC, UsersData} from '../redux/UsersPageReducer';
+import {followAC, setUsersAC, unfollowAC, UsersDataType} from '../redux/UsersPageReducer';
 import {Dispatch} from 'redux';
 import {AppStateType} from '../redux/redux-store';
-import {ActionTypes, DispatchType, FollowActionType, SetUsersActionType, UnFollowActionType} from '../redux/types';
+
 
 export type MapStatePropsType = {
     // описываем, что возвращает MapStateToProps
-    usersData: Array<UsersData>
+    usersData: Array<UsersDataType>
 }
 
 export  type MapDispatchPropsType = {
     // описываем, что возвращает MapDispatchToProps
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (usersData: Array<UsersData>) => void
+    setUsers: (usersData: Array<UsersDataType>) => void
 }
 
 
@@ -35,7 +35,7 @@ let mapDispatchToProps = (dispatch:Dispatch)=> {
         unfollow: (userId: number) => {
             dispatch(unfollowAC(userId))
         },
-        setUsers: (usersData: Array<UsersData>) => {
+        setUsers: (usersData: Array<UsersDataType>) => {
             dispatch(setUsersAC(usersData))
         }
     }

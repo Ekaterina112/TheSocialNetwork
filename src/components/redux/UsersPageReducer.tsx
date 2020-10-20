@@ -1,15 +1,17 @@
 import {ActionTypes, FollowActionType, SetUsersActionType, UnFollowActionType} from './types';
-
-export type UsersData = {
-    id: number,
-    followed: boolean,
-    name: string,
-    status: string,
-    photos:string,
-    location: { city: string, country: string }
+export type PhotosType = {
+    "small": string | null,
+    "large": string | null,
+}
+export type UsersDataType = {
+    id: number
+    name: string
+    status: string
+    photos: PhotosType
+    followed: boolean
 }
 export type UsersPageType = {
-    usersData: Array<UsersData>
+    usersData: Array<UsersDataType>
 }
 const FOLLOW='FOLLOW'
 const UNFOLLOW='UNFOLLOW'
