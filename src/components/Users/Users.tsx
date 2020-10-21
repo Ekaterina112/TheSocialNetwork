@@ -1,6 +1,6 @@
 import React from 'react';
 import {MapDispatchPropsType, MapStatePropsType} from './UsersContainer';
-import * as axios from 'axios';
+import axios from 'axios';
 import {UsersDataType} from '../redux/UsersPageReducer';
 
 
@@ -15,12 +15,10 @@ type GetUsersResponseType = {
 
 
 class Users extends React.Component<UsersPropsType> {
-    
+
       componentDidMount() {
-          // @ts-ignore
-          axios.get<GetUsersResponseType>('https://social-network.samuraijs.com/api/1.0/users')
-              .then((response: { data: { items: UsersDataType[]; }; }) => { //////&&&&&&&&&&&&&&&&
-                  return this.props.setUsers(response.data.items)
+          axios.get('https://social-network.samuraijs.com/api/1.0/users')
+              .then(response  => {this.props.setUsers(response.data.items)
               })
       }
 
