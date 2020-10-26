@@ -13,12 +13,12 @@ export type PostDataType = {
     message: string
     count: number
 }
-export type   MessagePageType = {
+export type MessagePageType = {
     dialogItemsData: Array<DialogItemDataType>
     messageData: Array<MessageDataType>
     newMessageText: string
 }
-export type   ProfilePageType = {
+export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
 }
@@ -55,14 +55,21 @@ export type FollowActionType = {
     userID: number
 }
 export type UnFollowActionType = {
-    type: 'UNFOLLOW', //string
+    type: 'UNFOLLOW',
     userID: number
 }
 export type SetUsersActionType = {
-    type: 'SET-USERS', //string
+    type: 'SET-USERS',
     usersData: any
 }
-
+export type SetCurrentPageActionType = {
+    type: 'SET-CURRENT-PAGE',
+    currentPage: number
+}
+export type SetUsersTotalCountType = {
+    type: 'SET-USERS-TOTAL-COUNT',
+    totalCount: number
+}
 export type ActionTypes =
     AddPostsActionType
     | UpDateNewPostTextActionType
@@ -71,6 +78,8 @@ export type ActionTypes =
     | FollowActionType
     | UnFollowActionType
     | SetUsersActionType
+    | SetCurrentPageActionType
+    | SetUsersTotalCountType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 
