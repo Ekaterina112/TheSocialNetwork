@@ -96,10 +96,10 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
 }
 
 //стреляет экшионы, это экшион креэйторы
-export const followAC = (userID: number): FollowActionType => ({type: FOLLOW, userID})
-export const unfollowAC = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
-export const setUsersAC = (usersData: Array<UsersDataType>): SetUsersActionType => ({type: SET_USERS, usersData})
-export const setCurrentPageAC = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
-export const setUsersTotalCountAC = (totalCount: number): SetUsersTotalCountType => ({type: SET_USERS_TOTAL_COUNT, totalCount})
-export const setFetchingAC = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
+export const follow = (userID: number): FollowActionType => ({type: FOLLOW, userID})
+export const unfollow = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
+export const setUsers = (usersData: Array<UsersDataType>): SetUsersActionType => ({type: SET_USERS, usersData})
+export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
+export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({type: SET_USERS_TOTAL_COUNT, totalCount})
+export const setIsFetching = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
 export default usersReducer

@@ -1,13 +1,8 @@
 import {connect} from 'react-redux';
 import {
-    followAC,
-    setCurrentPageAC, setFetchingAC,
-    setUsersAC,
-    setUsersTotalCountAC,
-    unfollowAC,
+    follow, setCurrentPage, setIsFetching, setUsers, setUsersTotalCount, unfollow,
     UsersDataType
 } from '../redux/UsersPageReducer';
-import {Dispatch} from 'redux';
 import {AppStateType} from '../redux/redux-store';
 import React from 'react';
 import axios from 'axios';
@@ -38,17 +33,17 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
     render() {
 
         return <>
-            {this.props.isFetching ? <Preloader/>:null}
-        <Users
+            {this.props.isFetching ? <Preloader/> : null}
+            <Users
 
-            totalUsersCount={this.props.totalUsersCount}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}
-            onPageChanged={this.onPageChanged}
-            unfollow={this.props.unfollow}
-            follow={this.props.follow}
-            usersData={this.props.usersData}
-        />
+                totalUsersCount={this.props.totalUsersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                unfollow={this.props.unfollow}
+                follow={this.props.follow}
+                usersData={this.props.usersData}
+            />
         </>
     }
 }
@@ -57,9 +52,9 @@ export type MapStatePropsType = {
     // описываем, что возвращает MapStateToProps
     usersData: Array<UsersDataType>
     pageSize: number,
-    totalUsersCount:number,
-    currentPage:number,
-    isFetching:boolean
+    totalUsersCount: number,
+    currentPage: number,
+    isFetching: boolean
 }
 
 export  type MapDispatchPropsType = {
@@ -68,8 +63,8 @@ export  type MapDispatchPropsType = {
     unfollow: (userId: number) => void
     setUsers: (usersData: Array<UsersDataType>) => void
     setCurrentPage: (pageNumber: number) => void
-    setUsersTotalCount:(totalCount:number) => void
-    setIsFetching:(isFetching:boolean)=>void
+    setUsersTotalCount: (totalCount: number) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 
 
@@ -77,16 +72,16 @@ export  type MapDispatchPropsType = {
 //принимает весь стэйт целиком, глобальный и возвращает обьект с нужными данными!,
 //которые в свою очередь берем из закомбайненого редьюсеров
 
-let mapStateToProps = (state: AppStateType):MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         usersData: state.usersPage.usersData, //необходимые данные
         pageSize: state.usersPage.pageSize,
-        totalUsersCount:state.usersPage.totalUsersCount,
-        currentPage:state.usersPage.currentPage,
-        isFetching:state.usersPage.isFetching
+        totalUsersCount: state.usersPage.totalUsersCount,
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch:Dispatch)=> {
+/*let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         follow: (userId: number) => {
             dispatch(followAC(userId))
@@ -108,8 +103,10 @@ let mapDispatchToProps = (dispatch:Dispatch)=> {
         }
     }
 
-}
+}*/
 //коннектим с помощью функции
 //mapStateToProps = state for our component
 //mapDispatchToProps for get out needed callbacks
-export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer)
+export default connect(mapStateToProps,
+    {follow, unfollow, setUsers, setCurrentPage, setUsersTotalCount, setIsFetching,})
+(UsersAPIContainer)
