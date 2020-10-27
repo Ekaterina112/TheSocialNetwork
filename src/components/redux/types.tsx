@@ -1,5 +1,7 @@
 //SAVE SOME TYPES //ONLY FOR TYPES
 
+import {UsersDataType} from './UsersPageReducer';
+
 export type MessageDataType = {
     message: string
     id?: number
@@ -60,7 +62,7 @@ export type UnFollowActionType = {
 }
 export type SetUsersActionType = {
     type: 'SET-USERS',
-    usersData: any
+    usersData: Array<UsersDataType>
 }
 export type SetCurrentPageActionType = {
     type: 'SET-CURRENT-PAGE',
@@ -69,6 +71,10 @@ export type SetCurrentPageActionType = {
 export type SetUsersTotalCountType = {
     type: 'SET-USERS-TOTAL-COUNT',
     totalCount: number
+}
+export type SetFetchingActionType = {
+    type: 'SET-FETCHING',
+    isFetching: boolean
 }
 export type ActionTypes =
     AddPostsActionType
@@ -80,6 +86,7 @@ export type ActionTypes =
     | SetUsersActionType
     | SetCurrentPageActionType
     | SetUsersTotalCountType
+    | SetFetchingActionType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 

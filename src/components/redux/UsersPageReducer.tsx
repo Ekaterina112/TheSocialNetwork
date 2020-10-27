@@ -1,7 +1,7 @@
 import {
     ActionTypes,
     FollowActionType,
-    SetCurrentPageActionType,
+    SetCurrentPageActionType, SetFetchingActionType,
     SetUsersActionType,
     SetUsersTotalCountType,
     UnFollowActionType
@@ -23,18 +23,20 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number
+    isFetching:boolean
 }
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT'
-
+const SET_FETCHING = 'SET-FETCHING'
 let initialState: UsersPageType = {
     usersData: [],
     pageSize: 99,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching:true
 }
 //редьюсеры принимают инициилизонный стэйт и определенный экшион,
 // по названию экшиона определяютя действия, для изменения стэйта
@@ -82,6 +84,12 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
                 totalUsersCount: action.totalCount
             }
         }
+        case SET_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        }
         default:
             return state
     }
@@ -90,7 +98,8 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
 //стреляет экшионы, это экшион креэйторы
 export const followAC = (userID: number): FollowActionType => ({type: FOLLOW, userID})
 export const unfollowAC = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
-export const setUsersAC = (usersData: any): SetUsersActionType => ({type: SET_USERS, usersData})
+export const setUsersAC = (usersData: Array<UsersDataType>): SetUsersActionType => ({type: SET_USERS, usersData})
 export const setCurrentPageAC = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
 export const setUsersTotalCountAC = (totalCount: number): SetUsersTotalCountType => ({type: SET_USERS_TOTAL_COUNT, totalCount})
+export const setFetchingAC = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
 export default usersReducer
