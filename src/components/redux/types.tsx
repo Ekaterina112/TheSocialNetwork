@@ -23,6 +23,7 @@ export type MessagePageType = {
 export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
+    profile: null | UserProfileType
 }
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -43,6 +44,10 @@ export type AddPostsActionType = {
 export type UpDateNewPostTextActionType = {
     type: 'UP-DATE-NEW-POST-TEXT', //string
     newText: string
+}
+export type SetUserProfileActionType = {
+    type: 'SET-USERS-PROFILE', //string
+    profile: UserProfileType      //?????????????????????????????????????????????????????????????????????????????????????????????????????
 }
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE', //string
@@ -87,9 +92,31 @@ export type ActionTypes =
     | SetCurrentPageActionType
     | SetUsersTotalCountType
     | SetFetchingActionType
+    | SetUserProfileActionType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 
+export type UserProfileType = {
+    aboutMe: string,
+    contacts: {
+        facebook: string,
+        website: null,
+        vk: string,
+        twitter: string,
+        instagram: string,
+        youtube: string,
+        github: string,
+        mainLink: null
+    },
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: number,
+    photos: {
+        small: string,
+        large: string
+    }
+}
 
 
 

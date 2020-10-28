@@ -107,6 +107,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 //коннектим с помощью функции
 //mapStateToProps = state for our component
 //mapDispatchToProps for get out needed callbacks
-export default connect(mapStateToProps,
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType >(mapStateToProps,
     {follow, unfollow, setUsers, setCurrentPage, setUsersTotalCount, setIsFetching,})
 (UsersAPIContainer)

@@ -1,9 +1,16 @@
-import {ActionTypes, AddPostsActionType, PostDataType, ProfilePageType, UpDateNewPostTextActionType} from './types';
+import {
+    ActionTypes,
+    AddPostsActionType,
+    PostDataType,
+    ProfilePageType,
+    SetUserProfileActionType,
+    UpDateNewPostTextActionType, UserProfileType
+} from './types';
 
 
 const ADD_POST='ADD-POST'; //is it need ???
 const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
-
+const SET_USERS_PROFILE='SET-USERS-PROFILE';
 
 
  let initialState: ProfilePageType = {
@@ -12,11 +19,12 @@ const UP_DATE_NEW_POST_TEXT='UP-DATE-NEW-POST-TEXT';
              {id: 2, message: 'How are you', count: 99},
              {id: 3, message: 'I am fine', count: 98},
          ],
-         newPostText: 'it-kamasutra.com'
+         newPostText: 'it-kamasutra.com',
+     profile:null
      }
 
 
-const profileReducer=(state =initialState, action:ActionTypes) => {
+const profileReducer=(state =initialState, action:ActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POSTS': {
             let newPost: PostDataType = {
@@ -35,7 +43,12 @@ const profileReducer=(state =initialState, action:ActionTypes) => {
                 ...state,
                 newPostText:action.newText,
             }
-
+        }
+        case 'SET-USERS-PROFILE': {
+            return  {
+                ...state,
+                profile: action.profile,
+            }
         }
         default:
             return state
@@ -43,7 +56,7 @@ const profileReducer=(state =initialState, action:ActionTypes) => {
 }
 
 export  const addPostCreator = ():AddPostsActionType =>({type: 'ADD-POSTS'})
-export const upDateNewPostTextCreator = (text:string):UpDateNewPostTextActionType => ({
-    type:'UP-DATE-NEW-POST-TEXT',newText:text})
+export const upDateNewPostTextCreator = (text:string):UpDateNewPostTextActionType => ({type:'UP-DATE-NEW-POST-TEXT',newText:text})
+export const setUserProfile= (profile: UserProfileType):SetUserProfileActionType => ({type:'SET-USERS-PROFILE',profile})
 
 export default profileReducer
