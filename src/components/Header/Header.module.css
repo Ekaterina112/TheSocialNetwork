@@ -6,3 +6,7 @@
     background-color: black;
     font-palette: light;
 }
+.login {
+    float: right;
+    color: wheat;
+}

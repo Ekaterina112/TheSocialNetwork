@@ -15,5 +15,5 @@ grid-template-areas:
 .app-wrapper-all{
   grid-area: c;
   background-color: slategray;
-
+color: white;
 }

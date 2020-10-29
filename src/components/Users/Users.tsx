@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import {UsersDataType} from '../redux/UsersPageReducer';
 import userPhoto from './../../avatar.jpg'
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
 
 
 type PropsType = {
@@ -39,17 +40,35 @@ let Users = (props:PropsType) => {
             props.usersData.map(u => <div key={u.id}>
                     <span>
                         <div>
-                            <NavLink  to={'/profile'}>
+                            <NavLink  to={'/profile/'+u.id}>
                             <img src={u.photos.small != null ? u.photos.small :userPhoto} width={100} height={100}/>
                             </NavLink>
                         </div>
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                        {withCredentials:true,
+                                        headers:{
+                                            "API-KEY":"97580e0f-7747-4533-9c03-60f1b0e4f8a8"
+                                        }})
+                                        .then(response => {
+                                            if(response.data.resultCode==0) {
+                                                props.unfollow(u.id)
+                                            }
+                                        })
                                 }}>unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{},
+                                        {withCredentials:true,
+                                        headers:{
+                                            "API-KEY":"97580e0f-7747-4533-9c03-60f1b0e4f8a8"
+                                        }})
+                                        .then(response => {
+                                            if(response.data.resultCode==0) {
+                                                props.follow(u.id)
+                                            }
+                                        })
                                 }}>follow</button>}
                         </div>
                     </span>

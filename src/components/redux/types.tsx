@@ -29,31 +29,23 @@ export type RootStateType = {
     profilePage: ProfilePageType
     messagePage: MessagePageType
 }
-
-export type StoreType = {
-    _state: RootStateType,
-    getState: () => RootStateType,
-    _callSubscriber: (_state: RootStateType) => void,
-    subscribe: (observer: () => void) => void,
-    dispatch: DispatchType
-}
 export type AddPostsActionType = {
     type: 'ADD-POSTS', //string
 
 }
 export type UpDateNewPostTextActionType = {
-    type: 'UP-DATE-NEW-POST-TEXT', //string
+    type: 'UP-DATE-NEW-POST-TEXT',
     newText: string
 }
 export type SetUserProfileActionType = {
-    type: 'SET-USERS-PROFILE', //string
-    profile: UserProfileType      //?????????????????????????????????????????????????????????????????????????????????????????????????????
+    type: 'SET-USERS-PROFILE',
+    profile: UserProfileType
 }
 export type SendMessageActionType = {
-    type: 'SEND-MESSAGE', //string
+    type: 'SEND-MESSAGE',
 }
 export type UpDateNewMessageTextActionType = {
-    type: 'UP-DATE-NEW-MESSAGE-TEXT', //string
+    type: 'UP-DATE-NEW-MESSAGE-TEXT',
     body: string
 }
 //FOR USERS PAGE
@@ -81,6 +73,15 @@ export type SetFetchingActionType = {
     type: 'SET-FETCHING',
     isFetching: boolean
 }
+export type SetAuthActionType = {
+    type: 'SET_USER_DATA',
+    data: AuthUsersType
+}
+export type AuthUsersType = {
+    email: null | string,
+    id: null | number,
+    login: null | string
+}
 export type ActionTypes =
     AddPostsActionType
     | UpDateNewPostTextActionType
@@ -93,6 +94,7 @@ export type ActionTypes =
     | SetUsersTotalCountType
     | SetFetchingActionType
     | SetUserProfileActionType
+    | SetAuthActionType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 
