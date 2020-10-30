@@ -1,7 +1,7 @@
 import {
     ActionTypes,
     FollowActionType,
-    SetCurrentPageActionType, SetFetchingActionType,
+    SetCurrentPageActionType, SetDisabledFollowingBTNActionType, SetFetchingActionType,
     SetUsersActionType,
     SetUsersTotalCountType,
     UnFollowActionType
@@ -23,7 +23,8 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number
-    isFetching:boolean
+    isFetching:boolean,
+    followingInProgress:Array<number>
 }
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -31,12 +32,14 @@ const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT'
 const SET_FETCHING = 'SET-FETCHING'
+const SET_DISABLED_FOLLOWING_BTN='SET_DISABLED_FOLLOWING_BTN'
 let initialState: UsersPageType = {
     usersData: [],
     pageSize: 99,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching:true
+    isFetching:true,
+    followingInProgress:[]
 }
 //редьюсеры принимают инициилизонный стэйт и определенный экшион,
 // по названию экшиона определяютя действия, для изменения стэйта
@@ -90,6 +93,14 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
                 isFetching: action.isFetching
             }
         }
+        case SET_DISABLED_FOLLOWING_BTN: {
+            return {
+                ...state,
+                followingInProgress:action.isFetching ?
+                      [...state.followingInProgress,action.userID]
+                    : state.followingInProgress.filter(id=> id!== action.userID)
+            }
+        }
         default:
             return state
     }
@@ -102,4 +113,5 @@ export const setUsers = (usersData: Array<UsersDataType>): SetUsersActionType =>
 export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
 export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({type: SET_USERS_TOTAL_COUNT, totalCount})
 export const setIsFetching = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
+export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): SetDisabledFollowingBTNActionType => ({type: SET_DISABLED_FOLLOWING_BTN, isFetching,userID})
 export default usersReducer

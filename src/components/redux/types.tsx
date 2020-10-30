@@ -73,6 +73,13 @@ export type SetFetchingActionType = {
     type: 'SET-FETCHING',
     isFetching: boolean
 }
+export type SetDisabledFollowingBTNActionType = {
+    type: 'SET_DISABLED_FOLLOWING_BTN',
+    isFetching: boolean,
+    userID:number
+}
+
+
 export type SetAuthActionType = {
     type: 'SET_USER_DATA',
     data: AuthUsersType
@@ -95,6 +102,7 @@ export type ActionTypes =
     | SetFetchingActionType
     | SetUserProfileActionType
     | SetAuthActionType
+    | SetDisabledFollowingBTNActionType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 

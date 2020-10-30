@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {
-    follow, setCurrentPage, setIsFetching, setUsers, setUsersTotalCount, unfollow,
+    follow, setCurrentPage, setDisabledFollowingBTN, setIsFetching, setUsers, setUsersTotalCount, unfollow,
     UsersDataType
 } from '../redux/UsersPageReducer';
 import {AppStateType} from '../redux/redux-store';
@@ -43,6 +43,9 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
                 usersData={this.props.usersData}
+                followingInProgress={this.props.followingInProgress}
+                setDisabledFollowingBTN={this.props.setDisabledFollowingBTN}
+
             />
         </>
     }
@@ -54,7 +57,8 @@ export type MapStatePropsType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: Array<number>
 }
 
 export  type MapDispatchPropsType = {
@@ -65,6 +69,8 @@ export  type MapDispatchPropsType = {
     setCurrentPage: (pageNumber: number) => void
     setUsersTotalCount: (totalCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    setDisabledFollowingBTN:(isFetching:boolean,userId: number)=>void
+
 }
 
 
@@ -78,7 +84,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 /*let mapDispatchToProps = (dispatch: Dispatch) => {
@@ -108,5 +115,5 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 //mapStateToProps = state for our component
 //mapDispatchToProps for get out needed callbacks
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType >(mapStateToProps,
-    {follow, unfollow, setUsers, setCurrentPage, setUsersTotalCount, setIsFetching,})
+    {follow, unfollow, setUsers, setCurrentPage, setUsersTotalCount, setIsFetching,setDisabledFollowingBTN})
 (UsersAPIContainer)

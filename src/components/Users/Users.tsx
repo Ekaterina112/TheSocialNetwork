@@ -7,23 +7,25 @@ import {deleteUnfollow, postFollow} from '../../API/api';
 
 
 type PropsType = {
-    totalUsersCount:number,
-    pageSize:number,
-    currentPage:number,
-    onPageChanged:(p:number) =>void,
-    usersData:Array<UsersDataType>,
-    unfollow:(userId: number) => void,
-    follow:(userId: number) => void
+    totalUsersCount: number,
+    pageSize: number,
+    currentPage: number,
+    onPageChanged: (p: number) => void,
+    usersData: Array<UsersDataType>,
+    unfollow: (userId: number) => void,
+    follow: (userId: number) => void,
+    followingInProgress: Array<number>,
+    setDisabledFollowingBTN: (isFetching:boolean,userId: number) => void
 }
 
 
-let Users = (props:PropsType) => {
-    let pagesCount = Math.ceil(props.totalUsersCount /props.pageSize)
+let Users = (props: PropsType) => {
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-  return  <div>
+    return <div>
         <div>
             {pages.map(p => {
                 return <span
@@ -40,28 +42,34 @@ let Users = (props:PropsType) => {
             props.usersData.map(u => <div key={u.id}>
                     <span>
                         <div>
-                            <NavLink  to={'/profile/'+u.id}>
-                            <img src={u.photos.small != null ? u.photos.small :userPhoto} width={100} height={100}/>
+                            <NavLink to={'/profile/' + u.id}>
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto} width={100} height={100}/>
                             </NavLink>
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={() => {
-                                    deleteUnfollow(u.id)
-                                        .then(data => {
-                                            if(data.resultCode==0) {
-                                                props.unfollow(u.id)
-                                            }
-                                        })
-                                }}>unfollow</button>
-                                : <button onClick={() => {
-                                    postFollow(u.id)
-                                        .then(data => {
-                                            if(data.resultCode==0) {
-                                                props.follow(u.id)
-                                            }
-                                        })
-                                }}>follow</button>}
+                                ? <button disabled={props.followingInProgress.some(id => id== u.id)}
+                                          onClick={() => {
+                                              props.setDisabledFollowingBTN(true, u.id)
+                                              deleteUnfollow(u.id)
+                                                  .then(data => {
+                                                      if (data.resultCode == 0) {
+                                                          props.unfollow(u.id)
+                                                      }
+                                                      props.setDisabledFollowingBTN(false, u.id)
+                                                  })
+                                          }}>unfollow</button>
+                                : <button disabled={props.followingInProgress.some(id => id== u.id)}
+                                          onClick={() => {
+                                              props.setDisabledFollowingBTN(true, u.id)
+                                              postFollow(u.id)
+                                                  .then(data => {
+                                                      if (data.resultCode == 0) {
+                                                          props.follow(u.id)
+                                                      }
+                                                      props.setDisabledFollowingBTN(false, u.id)
+                                                  })
+                                          }}>follow</button>}
                         </div>
                     </span>
                 <span>
