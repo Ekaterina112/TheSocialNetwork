@@ -1,6 +1,7 @@
 //SAVE SOME TYPES //ONLY FOR TYPES
 
 import {UsersDataType} from './UsersPageReducer';
+import {UsersAuthDataType} from './AuthReducer';
 
 export type MessageDataType = {
     message: string
@@ -26,6 +27,7 @@ export type ProfilePageType = {
     profile: null | UserProfileType
 }
 export type RootStateType = {
+    auth: UsersAuthDataType;
     profilePage: ProfilePageType
     messagePage: MessagePageType
 }

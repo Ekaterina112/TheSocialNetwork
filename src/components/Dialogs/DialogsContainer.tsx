@@ -27,7 +27,8 @@ import {Dispatch} from 'redux';
 
 
 let mapStateToProps = (state:RootStateType) => {
-    return {messagePage: state.messagePage}
+    return {messagePage: state.messagePage,
+    isAuth: state.auth.isAuth}
 
 }
 let mapDispatchToProps = (dispatch:Dispatch) => {

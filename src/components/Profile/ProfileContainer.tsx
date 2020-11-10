@@ -6,14 +6,14 @@ import {AppStateType} from '../redux/redux-store';
 import {getUserProfile} from '../redux/ProfilePageReducer';
 import {UserProfileType} from '../redux/types';
 import Preloader from '../common/Preloader';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 
 
 
 //типы входных данных описать
 type UsersProfilePropsType = MapDispatchPropsType & MapStatePropsType
 type PathParamType = {
-    userId: string
+    userId: string,
 }
 
 
@@ -30,12 +30,14 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
 
     }
     render() {
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return this.props.profile ? <Profile {...this.props} profile={this.props.profile}/> : <Preloader/>
     }
 }
 
 export type MapStatePropsType = {
     profile: null | UserProfileType
+    isAuth: boolean
 }
 
 export  type MapDispatchPropsType = {
@@ -43,7 +45,8 @@ export  type MapDispatchPropsType = {
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 //ОБЕРТКА, ЗАКИДЫВАЕТ ДАННЫЕ ИЗ УРЛА
