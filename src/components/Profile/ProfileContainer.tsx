@@ -1,14 +1,13 @@
 import React from 'react';
 import '../../App.css';
 import Profile from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppStateType} from '../redux/redux-store';
-import {setUserProfile} from '../redux/ProfilePageReducer';
+import {getUserProfile} from '../redux/ProfilePageReducer';
 import {UserProfileType} from '../redux/types';
 import Preloader from '../common/Preloader';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import { usersAPI} from '../../API/api';
+
 
 
 //типы входных данных описать
@@ -24,15 +23,11 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     componentDidMount() {
         //делать запросы тут
         let userId = Number(this.props.match.params.userId)
-        debugger
         if(!userId){
             userId=2
         }
-        usersAPI.getUseR(userId)
-            .then(data => {
-                    this.props.setUserProfile(data)
-                }
-            )
+        this.props.getUserProfile(userId)
+
     }
     render() {
         return this.props.profile ? <Profile {...this.props} profile={this.props.profile}/> : <Preloader/>
@@ -44,7 +39,7 @@ export type MapStatePropsType = {
 }
 
 export  type MapDispatchPropsType = {
-    setUserProfile: (profile: UserProfileType) => void
+    getUserProfile:(userId:number)=>void
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -54,4 +49,4 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 //ОБЕРТКА, ЗАКИДЫВАЕТ ДАННЫЕ ИЗ УРЛА
 let WithURLDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {setUserProfile})(WithURLDataContainerComponent)
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile})(WithURLDataContainerComponent)

@@ -3,7 +3,6 @@ import s from './Users.module.css';
 import {UsersDataType} from '../redux/UsersPageReducer';
 import userPhoto from './../../avatar.jpg'
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from '../../API/api';
 
 
 
@@ -13,10 +12,9 @@ type PropsType = {
     currentPage: number,
     onPageChanged: (p: number) => void,
     usersData: Array<UsersDataType>,
-    unfollow: Function,
-    follow: Function,
+    follow: (userId:number)=>void,
+    unfollow: (userId:number)=>void,
     followingInProgress: Array<number>,
-    setDisabledFollowingBTN: (isFetching:boolean,userId: number) => void
 }
 
 

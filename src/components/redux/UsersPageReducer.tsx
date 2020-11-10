@@ -1,6 +1,6 @@
 import {
     ActionTypes,
-    FollowActionType,
+    FollowActionType, RootStateType,
     SetCurrentPageActionType,
     SetDisabledFollowingBTNActionType,
     SetFetchingActionType,
@@ -9,6 +9,7 @@ import {
     UnFollowActionType
 } from './types';
 import { usersAPI} from '../../API/api';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 export type PhotosType = {
     'small': string | null,
@@ -124,10 +125,13 @@ export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): Se
     isFetching,
     userID
 })
+//типизация для санок, если это обычная санака то dispatch:Dispatch<ActionTypes> импортируем из redux
 
-export const getUsers = (currentPage:number,pageSize:number) => {
+type ThunkActionType = ThunkAction<void, RootStateType, unknown, ActionTypes>;
+type ThunkDispatchType = ThunkDispatch<RootStateType, unknown, ActionTypes>;
+export const getUsers = (currentPage:number,pageSize:number):ThunkActionType => {
 
-    return (dispatch:Function) => {
+    return (dispatch:ThunkDispatchType) => {
         dispatch(setIsFetching(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
@@ -137,9 +141,9 @@ export const getUsers = (currentPage:number,pageSize:number) => {
             })
     }
 }
-export const follow = (userId:number) => {
+export const follow = (userId:number):ThunkActionType => {
 
-    return (dispatch: Function) => {
+    return (dispatch: ThunkDispatchType) => {
         dispatch(setDisabledFollowingBTN(true, userId))
         usersAPI.postFollow(userId)
             .then(data => {
@@ -150,9 +154,9 @@ export const follow = (userId:number) => {
             })
     }
 }
-export const unfollow = (userId:number) => {
+export const unfollow = (userId:number):ThunkActionType => {
 
-    return (dispatch: Function) => {
+    return (dispatch: ThunkDispatchType) => {
         dispatch(setDisabledFollowingBTN(true, userId))
         usersAPI.deleteUnfollow(userId)
             .then(data => {

@@ -29,6 +29,7 @@ export type RootStateType = {
     profilePage: ProfilePageType
     messagePage: MessagePageType
 }
+
 export type AddPostsActionType = {
     type: 'ADD-POSTS', //string
 
@@ -93,6 +94,7 @@ export type ActionTypes =
     AddPostsActionType
     | UpDateNewPostTextActionType
     | UpDateNewMessageTextActionType
+    |SetUserProfileActionType
     | SendMessageActionType
     | FollowActionType
     | UnFollowActionType
@@ -100,7 +102,6 @@ export type ActionTypes =
     | SetCurrentPageActionType
     | SetUsersTotalCountType
     | SetFetchingActionType
-    | SetUserProfileActionType
     | SetAuthActionType
     | SetDisabledFollowingBTNActionType
 

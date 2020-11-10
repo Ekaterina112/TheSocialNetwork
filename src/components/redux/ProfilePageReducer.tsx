@@ -6,6 +6,8 @@ import {
     SetUserProfileActionType,
     UpDateNewPostTextActionType, UserProfileType
 } from './types';
+import {Dispatch} from 'redux';
+import {usersAPI} from '../../API/api';
 
 
 const ADD_POST='ADD-POST'; //is it need ???
@@ -58,5 +60,13 @@ const profileReducer=(state =initialState, action:ActionTypes): ProfilePageType 
 export  const addPostCreator = ():AddPostsActionType =>({type: 'ADD-POSTS'})
 export const upDateNewPostTextCreator = (text:string):UpDateNewPostTextActionType => ({type:'UP-DATE-NEW-POST-TEXT',newText:text})
 export const setUserProfile= (profile: UserProfileType):SetUserProfileActionType => ({type:'SET-USERS-PROFILE',profile})
+
+export const getUserProfile=(userId:number) => (dispatch:Dispatch) => {
+     usersAPI.getUseR(userId)
+        .then(data => {
+            dispatch(setUserProfile(data))
+        })
+}
+
 
 export default profileReducer

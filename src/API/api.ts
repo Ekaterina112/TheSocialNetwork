@@ -15,10 +15,6 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
-    getAuth: () => {
-        return instance.get(`auth/me`)
-            .then(response => response.data)
-    },
     getUseR: (userId: number) => {
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
@@ -31,4 +27,12 @@ export const usersAPI = {
         return instance.delete(`follow/${id}`)
             .then(response => response.data)
     }
+}
+export const authAPI = {
+
+    getAuth: () => {
+        return instance.get(`auth/me`)
+            .then(response => response.data)//это строка не нужна
+    },
+
 }
