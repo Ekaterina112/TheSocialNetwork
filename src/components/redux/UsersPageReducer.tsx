@@ -1,11 +1,14 @@
 import {
     ActionTypes,
     FollowActionType,
-    SetCurrentPageActionType, SetDisabledFollowingBTNActionType, SetFetchingActionType,
+    SetCurrentPageActionType,
+    SetDisabledFollowingBTNActionType,
+    SetFetchingActionType,
     SetUsersActionType,
     SetUsersTotalCountType,
     UnFollowActionType
 } from './types';
+import { usersAPI} from '../../API/api';
 
 export type PhotosType = {
     'small': string | null,
@@ -23,8 +26,8 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number
-    isFetching:boolean,
-    followingInProgress:Array<number>
+    isFetching: boolean,
+    followingInProgress: Array<number>
 }
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -32,14 +35,14 @@ const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT'
 const SET_FETCHING = 'SET-FETCHING'
-const SET_DISABLED_FOLLOWING_BTN='SET_DISABLED_FOLLOWING_BTN'
+const SET_DISABLED_FOLLOWING_BTN = 'SET_DISABLED_FOLLOWING_BTN'
 let initialState: UsersPageType = {
     usersData: [],
     pageSize: 99,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching:true,
-    followingInProgress:[]
+    isFetching: true,
+    followingInProgress: []
 }
 //редьюсеры принимают инициилизонный стэйт и определенный экшион,
 // по названию экшиона определяютя действия, для изменения стэйта
@@ -96,9 +99,9 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
         case SET_DISABLED_FOLLOWING_BTN: {
             return {
                 ...state,
-                followingInProgress:action.isFetching ?
-                      [...state.followingInProgress,action.userID]
-                    : state.followingInProgress.filter(id=> id!== action.userID)
+                followingInProgress: action.isFetching ?
+                    [...state.followingInProgress, action.userID]
+                    : state.followingInProgress.filter(id => id !== action.userID)
             }
         }
         default:
@@ -107,11 +110,58 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
 }
 
 //стреляет экшионы, это экшион креэйторы
-export const follow = (userID: number): FollowActionType => ({type: FOLLOW, userID})
-export const unfollow = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
+export const followSuccess = (userID: number): FollowActionType => ({type: FOLLOW, userID})
+export const unfollowSuccess = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
 export const setUsers = (usersData: Array<UsersDataType>): SetUsersActionType => ({type: SET_USERS, usersData})
 export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
-export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({type: SET_USERS_TOTAL_COUNT, totalCount})
+export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({
+    type: SET_USERS_TOTAL_COUNT,
+    totalCount
+})
 export const setIsFetching = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
-export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): SetDisabledFollowingBTNActionType => ({type: SET_DISABLED_FOLLOWING_BTN, isFetching,userID})
+export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): SetDisabledFollowingBTNActionType => ({
+    type: SET_DISABLED_FOLLOWING_BTN,
+    isFetching,
+    userID
+})
+
+export const getUsers = (currentPage:number,pageSize:number) => {
+
+    return (dispatch:Function) => {
+        dispatch(setIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setUsersTotalCount(data.totalCount))
+            })
+    }
+}
+export const follow = (userId:number) => {
+
+    return (dispatch: Function) => {
+        dispatch(setDisabledFollowingBTN(true, userId))
+        usersAPI.postFollow(userId)
+            .then(data => {
+                if (data.resultCode == 0) {
+                    dispatch(followSuccess(userId))
+                }
+                dispatch(setDisabledFollowingBTN(false, userId))
+            })
+    }
+}
+export const unfollow = (userId:number) => {
+
+    return (dispatch: Function) => {
+        dispatch(setDisabledFollowingBTN(true, userId))
+        usersAPI.deleteUnfollow(userId)
+            .then(data => {
+                if (data.resultCode == 0) {
+                   dispatch( unfollowSuccess(userId))
+                }
+                dispatch(setDisabledFollowingBTN(false, userId))
+            })
+    }
+}
+
 export default usersReducer

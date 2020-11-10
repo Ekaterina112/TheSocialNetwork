@@ -3,7 +3,8 @@ import s from './Users.module.css';
 import {UsersDataType} from '../redux/UsersPageReducer';
 import userPhoto from './../../avatar.jpg'
 import {NavLink} from 'react-router-dom';
-import {deleteUnfollow, postFollow} from '../../API/api';
+import {usersAPI} from '../../API/api';
+
 
 
 type PropsType = {
@@ -12,8 +13,8 @@ type PropsType = {
     currentPage: number,
     onPageChanged: (p: number) => void,
     usersData: Array<UsersDataType>,
-    unfollow: (userId: number) => void,
-    follow: (userId: number) => void,
+    unfollow: Function,
+    follow: Function,
     followingInProgress: Array<number>,
     setDisabledFollowingBTN: (isFetching:boolean,userId: number) => void
 }
@@ -49,27 +50,10 @@ let Users = (props: PropsType) => {
                         <div>
                             {u.followed
                                 ? <button disabled={props.followingInProgress.some(id => id== u.id)}
-                                          onClick={() => {
-                                              props.setDisabledFollowingBTN(true, u.id)
-                                              deleteUnfollow(u.id)
-                                                  .then(data => {
-                                                      if (data.resultCode == 0) {
-                                                          props.unfollow(u.id)
-                                                      }
-                                                      props.setDisabledFollowingBTN(false, u.id)
-                                                  })
+                                          onClick={() => { props.unfollow(u.id)
                                           }}>unfollow</button>
                                 : <button disabled={props.followingInProgress.some(id => id== u.id)}
-                                          onClick={() => {
-                                              props.setDisabledFollowingBTN(true, u.id)
-                                              postFollow(u.id)
-                                                  .then(data => {
-                                                      if (data.resultCode == 0) {
-                                                          props.follow(u.id)
-                                                      }
-                                                      props.setDisabledFollowingBTN(false, u.id)
-                                                  })
-                                          }}>follow</button>}
+                                          onClick={() => { props.follow(u.id)}}>follow</button>}
                         </div>
                     </span>
                 <span>

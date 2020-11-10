@@ -8,7 +8,7 @@ import {setUserProfile} from '../redux/ProfilePageReducer';
 import {UserProfileType} from '../redux/types';
 import Preloader from '../common/Preloader';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {getUseR} from '../../API/api';
+import { usersAPI} from '../../API/api';
 
 
 //типы входных данных описать
@@ -28,7 +28,7 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
         if(!userId){
             userId=2
         }
-      getUseR(userId)
+        usersAPI.getUseR(userId)
             .then(data => {
                     this.props.setUserProfile(data)
                 }
