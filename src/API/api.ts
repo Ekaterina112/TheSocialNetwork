@@ -3,6 +3,7 @@ import axios from 'axios'
 
 //вопросы для тех поддержки 1.почему не работает * from axios 2. расширение такого рода файлов
 //екземпляр со всеми настройками для конкретного API
+//без типизации
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,

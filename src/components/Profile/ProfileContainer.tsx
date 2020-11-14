@@ -7,6 +7,7 @@ import {getUserProfile} from '../redux/ProfilePageReducer';
 import {UserProfileType} from '../redux/types';
 import Preloader from '../common/Preloader';
 import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {WithAuthRedirectComponent} from '../../hoc/withAuthRedirect';
 
 
 
@@ -21,7 +22,6 @@ type CommonUsersProfilePropsType = RouteComponentProps<PathParamType> & UsersPro
 
 class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     componentDidMount() {
-        //делать запросы тут
         let userId = Number(this.props.match.params.userId)
         if(!userId){
             userId=2
@@ -30,26 +30,28 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
 
     }
     render() {
-        if (!this.props.isAuth) return <Redirect to={'/login'}/>
+
         return this.props.profile ? <Profile {...this.props} profile={this.props.profile}/> : <Preloader/>
     }
 }
 
 export type MapStatePropsType = {
     profile: null | UserProfileType
-    isAuth: boolean
+
 }
 
 export  type MapDispatchPropsType = {
     getUserProfile:(userId:number)=>void
 }
+let AuthRedirectComponent= WithAuthRedirectComponent(ProfileContainer)
+
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth
+        profile: state.profilePage.profile
     }
 }
 //ОБЕРТКА, ЗАКИДЫВАЕТ ДАННЫЕ ИЗ УРЛА
-let WithURLDataContainerComponent = withRouter(ProfileContainer)
+let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
 
+// @ts-ignore
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile})(WithURLDataContainerComponent)

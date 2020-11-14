@@ -3,13 +3,11 @@ import s from './Dialogs.module.css'
 import MessagesItems from './MessagesItems/MessagesItems';
 import DialogsItems from './DialogsItems/DialogsItems';
 import {MessagePageType} from '../redux/types';
-import { Redirect } from 'react-router-dom';
 
 type DialogsPropsType = {
     messagePage: MessagePageType
     upDateNewMessageText:(body:string)=>void //tyt pravilno ili net
     sendMessage:() =>void
-    isAuth:boolean
 }
 
 
@@ -27,7 +25,7 @@ const Dialogs = (props: DialogsPropsType) => {
         let body= e.target.value
         props.upDateNewMessageText(body)
     }
-    if (!props.isAuth) return <Redirect to={'/login'}/>
+
     return (
         <div className={s.allDialogs}>
             <div className={s.dialogs}>
