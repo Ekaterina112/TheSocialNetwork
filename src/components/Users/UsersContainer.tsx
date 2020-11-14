@@ -1,10 +1,11 @@
 import {connect} from 'react-redux';
 import {follow, getUsers, setCurrentPage, unfollow, UsersDataType} from '../redux/UsersPageReducer';
 import {AppStateType} from '../redux/redux-store';
-import React from 'react';
+import React, {ComponentType} from 'react';
 import Users from './Users';
 import Preloader from '../common/Preloader';
 import {WithAuthRedirectComponent} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type UsersPropsType = MapDispatchPropsType & MapStatePropsType
 
@@ -54,11 +55,9 @@ export  type MapDispatchPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-
 //контейнерная компонента просто снабжает нашу презентационную компоненту нужными пропсами
 //принимает весь стэйт целиком, глобальный и возвращает обьект с нужными данными!,
 //которые в свою очередь берем из закомбайненого редьюсеров
-
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         usersData: state.usersPage.usersData, //необходимые данные
@@ -69,10 +68,13 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
-let AuthRedirectComponent= WithAuthRedirectComponent(UsersAPIContainer)
-//коннектим с помощью функции
-//mapStateToProps = state for our component
-//mapDispatchToProps for get out needed callbacks
+/*//..............3...................2........................1
+let AuthRedirectComponent = WithAuthRedirectComponent(UsersAPIContainer)
+//коннектим с помощью функции//mapStateToProps = state for our component//mapDispatchToProps for get out needed callbacks
+//...................................................................................4
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
     {follow, unfollow, setCurrentPage, getUsers})
-(AuthRedirectComponent)
+(AuthRedirectComponent)*/
+export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
+    {follow, unfollow, setCurrentPage, getUsers}),
+    WithAuthRedirectComponent)(UsersAPIContainer)

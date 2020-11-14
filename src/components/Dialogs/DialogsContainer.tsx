@@ -1,24 +1,42 @@
-import React, {ChangeEvent} from 'react';
+import React, {ComponentType} from 'react';
 import {upDateNewMessageTextCreator, sendMessageCreator,} from '../redux/MessagePageReducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {RootStateType} from '../redux/types';
-import {Dispatch} from 'redux';
+import {MessagePageType, RootStateType} from '../redux/types';
+import {compose, Dispatch} from 'redux';
 import {WithAuthRedirectComponent} from '../../hoc/withAuthRedirect';
+import {AppStateType} from '../redux/redux-store';
 
 
-let mapStateToProps = (state:RootStateType) => {
+
+export type MapStatePropsType = {
+    // описываем, что возвращает MapStateToProps
+    messagePage: MessagePageType
+}
+
+export  type MapDispatchPropsType = {
+    // описываем, что возвращает MapDispatchToProps
+    upDateNewMessageText: (messageText: string) => void,
+    sendMessage: () => void
+}
+
+let mapStateToProps = (state:RootStateType):MapStatePropsType => {
     return {messagePage: state.messagePage}
 }
-let mapDispatchToProps = (dispatch:Dispatch) => {
+let mapDispatchToProps = (dispatch:Dispatch):MapDispatchPropsType => {
     return {
         upDateNewMessageText: (messageText: string) => {
             dispatch(upDateNewMessageTextCreator(messageText))},
                 sendMessage: () => {dispatch(sendMessageCreator())}
         }
     }
-
+/*//............3...........................2..............1
 let AuthRedirectComponent =WithAuthRedirectComponent(Dialogs)
-const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)
+//.......................................4.....................................3
+const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)*/
+//почему в одних скобках?????
+//2 параметром целевая
 
-export default DialogsContainer
+
+
+export default compose<ComponentType>(connect <MapStatePropsType, MapDispatchPropsType, {}, AppStateType> (mapStateToProps, mapDispatchToProps), WithAuthRedirectComponent)(Dialogs)

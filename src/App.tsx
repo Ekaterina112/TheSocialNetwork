@@ -11,6 +11,7 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './LoginPage/LoginPage';
 
+
 type PropsType = {}
 
 const App = (props: PropsType) => {
