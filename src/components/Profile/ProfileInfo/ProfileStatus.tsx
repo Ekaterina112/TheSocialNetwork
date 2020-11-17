@@ -18,6 +18,7 @@ class ProfileStatus extends React.Component<PropsType>
      })
     }
     deactivatedMode=()=>{
+
         this.setState({
             editMode:false
         })
