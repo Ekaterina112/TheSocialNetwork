@@ -13,13 +13,13 @@ class ProfileStatus extends React.Component<PropsType> {
         status: this.props.status
     }
 
-    activatedMode=()=> {
+    activatedMode = () => {
         this.setState({
             editMode: true
         })
     }
 
-    deactivatedMode=()=>{
+    deactivatedMode = () => {
 
         this.setState({editMode: false})
         this.props.updateStatus(this.state.status)
@@ -28,6 +28,12 @@ class ProfileStatus extends React.Component<PropsType> {
         this.setState({status: e.currentTarget.value})
     }
 
+  /*  componentDidUpdate(prevProps: any, prevState: any) {
+        if (prevProps.props.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
+    }*/
+//don't working, check it later'
     render() {
         return <div>
             <div>
