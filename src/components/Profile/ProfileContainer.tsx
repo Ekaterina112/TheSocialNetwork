@@ -3,7 +3,7 @@ import '../../App.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../redux/redux-store';
-import {getUserProfile} from '../redux/ProfilePageReducer';
+import {getStatus, getUserProfile, updateStatus} from '../redux/ProfilePageReducer';
 import {UserProfileType} from '../redux/types';
 import Preloader from '../common/Preloader';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -24,28 +24,35 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = 2
+            userId = 12000
         }
         this.props.getUserProfile(userId)
-
+        this.props.getStatus(userId)
     }
-
     render() {
 
-        return this.props.profile ? <Profile {...this.props} profile={this.props.profile}/> : <Preloader/>
+        return this.props.profile
+            ?
+            <Profile {...this.props} profile={this.props.profile} status={this.props.status}
+                     updateStatus={this.props.updateStatus}/>
+            : <Preloader/>
     }
 }
 
 export type MapStatePropsType = {
     profile: null | UserProfileType
+    status: string
 }
 
 export  type MapDispatchPropsType = {
     getUserProfile: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status:string) => void
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        status: state.profilePage.status,
     }
 }
 
@@ -57,7 +64,13 @@ let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
 //.....................................6.......................................................................................................5
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile})(WithURLDataContainerComponent)*/
 
- export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile}),
+
+
+export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
+        getUserProfile,
+        getStatus,
+        updateStatus
+    }),
     withRouter,
     WithAuthRedirectComponent)
 (ProfileContainer)

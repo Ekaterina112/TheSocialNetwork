@@ -39,9 +39,9 @@ export const setAuthUsersData = (data: UsersAuthDataType): SetAuthActionType => 
 
 export const getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.getAuth()
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(setAuthUsersData(data.data))
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUsersData(response.data.data))
             }
         })
 }

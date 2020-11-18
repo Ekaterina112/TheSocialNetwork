@@ -25,6 +25,7 @@ export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
     profile: null | UserProfileType
+    status:string
 }
 export type RootStateType = {
     auth: UsersAuthDataType;
@@ -43,6 +44,15 @@ export type UpDateNewPostTextActionType = {
 export type SetUserProfileActionType = {
     type: 'SET-USERS-PROFILE',
     profile: UserProfileType
+}
+export type SetStatusType = {
+    type: 'SET-STATUS',
+    status: string
+}
+
+export type GetStatusType = {
+    type: 'GET-STATUS',
+    status: string
 }
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
@@ -106,6 +116,8 @@ export type ActionTypes =
     | SetFetchingActionType
     | SetAuthActionType
     | SetDisabledFollowingBTNActionType
+|SetStatusType
+|GetStatusType
 
 export type DispatchType = { dispatch: (action: ActionTypes) => void }
 

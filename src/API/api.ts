@@ -16,9 +16,8 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
-    getUseR: (userId: number) => {
-        return instance.get(`profile/${userId}`)
-            .then(response => response.data)
+    getProfile: (userId: number) => {
+        return profileAPI.getProfile(userId)
     },
     postFollow: (id: number) => {
         return instance.post(`follow/${id}`)
@@ -29,11 +28,22 @@ export const usersAPI = {
             .then(response => response.data)
     }
 }
-export const authAPI = {
-
-    getAuth: () => {
-        return instance.get(`auth/me`)
-            .then(response => response.data)//это строка не нужна
+export const profileAPI = {
+    getProfile: (userId: number) => {
+        return instance.get(`profile/${userId}`)
+            .then(response => response.data)
     },
+    getStatus (userId: number) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus (status:string){
+        return instance.put('profile/status', {status})
+    },
+
+}
+export const authAPI = {
+    getAuth() {
+        return instance.get(`auth/me`)
+    }
 
 }
