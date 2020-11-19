@@ -1,15 +1,13 @@
 import React from 'react';
-import s from './LoginPage.module.css'
+import LoginReduxForm from './LoginForm';
 
 const LoginPage = () => {
-    return (
-        <h3>Login here please</h3>
+    return (<div>
+            <h1>Login here please</h1>
+           <LoginReduxForm/>
+        </div>
     )
 }
-
-
-
-
 
 
 export default LoginPage

@@ -12,7 +12,7 @@ const Header = (props: PropsType) => {
         Whats uP!
         <div className={classes.login}>
             {props.isAuth ? props.login :
-                <NavLink to={'/login'} className={classes.login}>}
+                <NavLink to={'/login'} className={classes.login}> 
                     Login
                 </NavLink>}
         </div>
