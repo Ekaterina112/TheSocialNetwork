@@ -1,42 +1,29 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import '../../../App.css';
-import classes from './MyPosts.module.css'
 import Post from './Post/Post';
-import {addPostCreator, upDateNewPostTextCreator} from '../../redux/ProfilePageReducer';
-import {ActionTypes, PostDataType} from '../../redux/types';
+import {PostDataType} from '../../redux/types';
+import PostReduxForm from './PostForm';
 
 type PropsType = {
     postData: Array<PostDataType>
-    /* dispatch: (action:ActionTypes) => void*/
     newPostText?: string
-    addPost: () => void
-    upDateNewPostText: (text: string) => void
+    addPost: (newPostBody:string) => void
 }
 
 
 const MyPosts = (props: PropsType) => {
     let posts = props.postData.map((p) => <Post key={p.id} message={p.message} count={p.count}/>)
 
-    let addPost = () => {
-        props.addPost();
+    let addPost = (value:any) => {
+        props.addPost(value.newPostBody);
     }
-    let onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        let text =e.target.value
-        props.upDateNewPostText(text)
-    }
+
     return <div>
-        <div> my posts
-            <div>
-                <textarea
-                          onChange={onPostChange}
-                          value={props.newPostText}/>
-            </div>
-            <div>
-                <button onClick={addPost}>Add post</button>
-                <button>Remove</button>
-            </div>
-        </div>
+    <h3> my posts</h3>
+    <PostReduxForm onSubmit={addPost}/>
+    <div>
         {posts}
+    </div>
     </div>
 }
 export default MyPosts

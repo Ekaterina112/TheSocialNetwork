@@ -4,24 +4,23 @@ import {
     PostDataType,
     ProfilePageType, SetStatusType,
     SetUserProfileActionType,
-    UpDateNewPostTextActionType,
     UserProfileType
 } from './types';
 import {Dispatch} from 'redux';
 import {profileAPI, usersAPI} from '../../API/api';
+import {v1} from 'uuid';
 
 
 const ADD_POST = 'ADD-POST'; //is it need ???
-const UP_DATE_NEW_POST_TEXT = 'UP-DATE-NEW-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_STATUS = 'SET-STATUS';
 const GET_STATUS = 'SET-STATUS';
 
 let initialState: ProfilePageType = {
     postData: [
-        {id: 1, message: 'Hello', count: 100},
-        {id: 2, message: 'How are you', count: 99},
-        {id: 3, message: 'I am fine', count: 98},
+        {id: v1(), message: 'Hello', count: 100},
+        {id: v1(), message: 'How are you', count: 99},
+        {id: v1(), message: 'I am fine', count: 98},
     ],
     newPostText: 'it-kamasutra.com',
     profile: null,
@@ -33,20 +32,13 @@ const profileReducer = (state = initialState, action: ActionTypes): ProfilePageT
     switch (action.type) {
         case 'ADD-POSTS': {
             let newPost: PostDataType = {
-                id: 4,
-                message: state.newPostText,
+                id: v1(),
+                message: action.newPostBody,
                 count: 0
             }
             return {
                 ...state,
                 postData: [...state.postData, newPost],
-                newPostText: ''
-            }
-        }
-        case 'UP-DATE-NEW-POST-TEXT': {
-            return {
-                ...state,
-                newPostText: action.newText,
             }
         }
         case 'SET-STATUS': {
@@ -72,11 +64,8 @@ const profileReducer = (state = initialState, action: ActionTypes): ProfilePageT
     }
 }
 
-export const addPostCreator = (): AddPostsActionType => ({type: 'ADD-POSTS'})
-export const upDateNewPostTextCreator = (text: string): UpDateNewPostTextActionType => ({
-    type: 'UP-DATE-NEW-POST-TEXT',
-    newText: text
-})
+export const addPostCreator = (newPostBody:string): AddPostsActionType => ({type: 'ADD-POSTS',newPostBody})
+
 export const setUserProfile = (profile: UserProfileType): SetUserProfileActionType => ({
     type: 'SET-USERS-PROFILE',
     profile

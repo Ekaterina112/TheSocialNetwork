@@ -12,14 +12,13 @@ export type DialogItemDataType = {
     id: number
 }
 export type PostDataType = {
-    id?: number
+    id: string
     message: string
     count: number
 }
 export type MessagePageType = {
     dialogItemsData: Array<DialogItemDataType>
     messageData: Array<MessageDataType>
-    newMessageText: string
 }
 export type ProfilePageType = {
     postData: Array<PostDataType>
@@ -34,13 +33,11 @@ export type RootStateType = {
 }
 
 export type AddPostsActionType = {
-    type: 'ADD-POSTS', //string
+    type: 'ADD-POSTS',
+    newPostBody:string
 
 }
-export type UpDateNewPostTextActionType = {
-    type: 'UP-DATE-NEW-POST-TEXT',
-    newText: string
-}
+
 export type SetUserProfileActionType = {
     type: 'SET-USERS-PROFILE',
     profile: UserProfileType
@@ -56,11 +53,9 @@ export type GetStatusType = {
 }
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
+    newMessageBody:string
 }
-export type UpDateNewMessageTextActionType = {
-    type: 'UP-DATE-NEW-MESSAGE-TEXT',
-    body: string
-}
+
 //FOR USERS PAGE
 export type FollowActionType = {
     type: 'FOLLOW', //string
@@ -104,8 +99,6 @@ export type AuthUsersType = {
 }
 export type ActionTypes =
     AddPostsActionType
-    | UpDateNewPostTextActionType
-    | UpDateNewMessageTextActionType
     |SetUserProfileActionType
     | SendMessageActionType
     | FollowActionType

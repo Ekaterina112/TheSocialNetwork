@@ -3,11 +3,12 @@ import s from './Dialogs.module.css'
 import MessagesItems from './MessagesItems/MessagesItems';
 import DialogsItems from './DialogsItems/DialogsItems';
 import {MessagePageType} from '../redux/types';
+import DialogsReduxForm from './DialogsForm';
+
 
 type DialogsPropsType = {
     messagePage: MessagePageType
-    upDateNewMessageText:(body:string)=>void //tyt pravilno ili net
-    sendMessage:() =>void
+    sendMessage:(newMessageBody:string) =>void
 }
 
 
@@ -16,15 +17,13 @@ const Dialogs = (props: DialogsPropsType) => {
 
     let dialogArr = state.dialogItemsData.map((d) => <DialogsItems name={d.name} key={d.id} id={d.id}/>)
     let messageArr = state.messageData.map((m) => <MessagesItems message={m.message} key={m.id}/>)
-    let newMessageBody = state.newMessageText
 
-    const onSendMessageClick = () => {
-        props.sendMessage()
+
+    const onSendMessageClick = (value:any) => {
+        // field name
+        props.sendMessage(value.newMessageBody)
     }
-    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        let body= e.target.value
-        props.upDateNewMessageText(body)
-    }
+
 
     return (
         <div className={s.allDialogs}>
@@ -34,14 +33,7 @@ const Dialogs = (props: DialogsPropsType) => {
             <div className={s.messages}>
                 {messageArr}
             </div>
-            <div>
-                <textarea
-                    value={newMessageBody}
-                    onChange={onNewMessageChange}
-                    placeholder={'enter your message...'}></textarea>
-
-                <button onClick={onSendMessageClick}>send</button>
-            </div>
+          <DialogsReduxForm onSubmit={onSendMessageClick}/>
         </div>
     )
 }
