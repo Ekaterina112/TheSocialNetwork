@@ -1,6 +1,7 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
 import {maxLengthCreator, minLengthCreator, required} from '../../../utilits/validators/postFormValidators';
+import {Textarea} from '../../common/formController/FormController';
 
 export  type PostDataType = {}
 //& IProps add if want to give some other props
@@ -11,8 +12,8 @@ const PostForm: React.FC<InjectedFormProps<PostDataType>> = (props) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field placeholder={'new post...'} name={'newPostBody'} component={'textarea'}
-                   validate={[required, maxLength]}/>
+            <Field placeholder={'new post...'} name={'newPostBody'} component={Textarea}
+                   validate={[required, maxLength, minLength]}/>
             <button>Add post</button>
         </form>
     )
