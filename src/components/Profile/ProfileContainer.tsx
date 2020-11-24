@@ -17,23 +17,18 @@ type PathParamType = {
     userId: string,
 }
 
-
 type CommonUsersProfilePropsType = RouteComponentProps<PathParamType> & UsersProfilePropsType
 
 class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     componentDidMount() {
-        let id = Number(this.props.match.params.userId)
-        let userId
-        //let userId = id ? id : this.props.currentUserId
+        let userId = Number(this.props.match.params.userId)
         if (!userId) {
             //userId = 12000
-            userId = this.props.currentUserId
-        } else {
-            userId = id
+            userId = this.props.currentUserId!
+            //*
         }
-        
-        this.props.getUserProfile(userId!)
-        this.props.getStatus(userId!)
+        this.props.getUserProfile(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
@@ -83,6 +78,6 @@ export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchProp
     withRouter,
     WithAuthRedirectComponent)
 (ProfileContainer)
-//В TypeScript постфикс ! удаляет null и undefined из типа выражения.
+//*В TypeScript постфикс ! удаляет null и undefined из типа выражения.
 //
 // Это полезно, когда вы знаете, по причинам, выходящим за пределы способности вывода TypeScript, что переменная, которая "could" будет null или undefined , на самом деле не является таковой.
