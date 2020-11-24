@@ -22,13 +22,20 @@ type CommonUsersProfilePropsType = RouteComponentProps<PathParamType> & UsersPro
 
 class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     componentDidMount() {
-        let userId = Number(this.props.match.params.userId)
+        let id = Number(this.props.match.params.userId)
+        let userId
+        //let userId = id ? id : this.props.currentUserId
         if (!userId) {
-            userId = 12000
+            //userId = 12000
+            userId = this.props.currentUserId
+        } else {
+            userId = id
         }
-        this.props.getUserProfile(userId)
-        this.props.getStatus(userId)
+        
+        this.props.getUserProfile(userId!)
+        this.props.getStatus(userId!)
     }
+
     render() {
         return this.props.profile
             ?
@@ -41,17 +48,21 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
 export type MapStatePropsType = {
     profile: null | UserProfileType
     status: string
+    currentUserId: number | null,
+    isAuth: boolean
 }
 
 export  type MapDispatchPropsType = {
     getUserProfile: (userId: number) => void
     getStatus: (userId: number) => void
-    updateStatus: (status:string) => void
+    updateStatus: (status: string) => void
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
+        currentUserId: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 
@@ -64,7 +75,6 @@ let WithURLDataContainerComponent = withRouter(AuthRedirectComponent)
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {getUserProfile})(WithURLDataContainerComponent)*/
 
 
-
 export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
         getUserProfile,
         getStatus,
@@ -73,3 +83,6 @@ export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchProp
     withRouter,
     WithAuthRedirectComponent)
 (ProfileContainer)
+//В TypeScript постфикс ! удаляет null и undefined из типа выражения.
+//
+// Это полезно, когда вы знаете, по причинам, выходящим за пределы способности вывода TypeScript, что переменная, которая "could" будет null или undefined , на самом деле не является таковой.

@@ -1,7 +1,7 @@
 //SAVE SOME TYPES //ONLY FOR TYPES
 
 import {UsersDataType} from './UsersPageReducer';
-import {UsersAuthDataType} from './AuthReducer';
+import {UsersAuthDataType} from './authReducer';
 
 export type MessageDataType = {
     message: string
