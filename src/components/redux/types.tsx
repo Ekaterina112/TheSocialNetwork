@@ -33,7 +33,7 @@ export type RootStateType = {
 }
 
 export type AddPostsActionType = {
-    type: 'ADD-POSTS',
+    type: 'ADD-POST',
     newPostBody:string
 
 }
@@ -90,7 +90,7 @@ export type SetDisabledFollowingBTNActionType = {
 
 export type SetAuthActionType = {
     type: 'SET_USER_DATA',
-    data: AuthUsersType
+    payload: UsersAuthDataType
 }
 export type AuthUsersType = {
     email: null | string,

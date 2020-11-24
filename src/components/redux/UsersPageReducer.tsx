@@ -30,6 +30,7 @@ export type UsersPageType = {
     isFetching: boolean,
     followingInProgress: Array<number>
 }
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'

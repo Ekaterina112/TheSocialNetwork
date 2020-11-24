@@ -1,4 +1,4 @@
-import {ActionTypes, SetAuthActionType} from './types';
+import {ActionTypes} from './types';
 import {authAPI} from '../../API/api';
 import {Dispatch} from 'redux';
 
@@ -26,25 +26,44 @@ const authReducer = (state = initialState, action: ActionTypes): UsersAuthDataTy
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.payload,
             }
         }
         default:
             return state
     }
 }
+//actionCreator
+export const setAuthUsersData = (payload: UsersAuthDataType) => ({type: SET_USER_DATA, payload})
 
-export const setAuthUsersData = (data: UsersAuthDataType): SetAuthActionType => ({type: SET_USER_DATA, data})
 
+//thunkCreator
 export const getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.getAuth()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(setAuthUsersData(response.data.data))
+                let {email, id, login} = response.data.data
+                dispatch(setAuthUsersData({email, id, login,  isAuth:true}))
             }
         })
 }
-
+//thunkCreator
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<any>) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
+}
+//thunkCreator
+export const logout = () => (dispatch: Dispatch<any>) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUsersData({email: null, id: null, login: null, isAuth: false}))
+            }
+        })
+}
 
 export default authReducer

@@ -11,10 +11,10 @@ import {profileAPI, usersAPI} from '../../API/api';
 import {v1} from 'uuid';
 
 
-const ADD_POST = 'ADD-POST'; //is it need ???
+const ADD_POST = 'ADD-POST';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_STATUS = 'SET-STATUS';
-const GET_STATUS = 'SET-STATUS';
+const GET_STATUS = 'GET-STATUS';
 
 let initialState: ProfilePageType = {
     postData: [
@@ -30,7 +30,7 @@ let initialState: ProfilePageType = {
 
 const profileReducer = (state = initialState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
-        case 'ADD-POSTS': {
+        case ADD_POST: {
             let newPost: PostDataType = {
                 id: v1(),
                 message: action.newPostBody,
@@ -41,19 +41,19 @@ const profileReducer = (state = initialState, action: ActionTypes): ProfilePageT
                 postData: [...state.postData, newPost],
             }
         }
-        case 'SET-STATUS': {
+        case SET_STATUS: {
             return {
                 ...state,
                status: action.status,
             }
         }
-        case 'GET-STATUS': {
+        case GET_STATUS: {
             return {
                 ...state,
                 status: action.status,
             }
         }
-        case 'SET-USERS-PROFILE': {
+        case SET_USERS_PROFILE: {
             return {
                 ...state,
                 profile: action.profile,
@@ -64,14 +64,14 @@ const profileReducer = (state = initialState, action: ActionTypes): ProfilePageT
     }
 }
 
-export const addPostCreator = (newPostBody:string): AddPostsActionType => ({type: 'ADD-POSTS',newPostBody})
+export const addPostCreator = (newPostBody:string): AddPostsActionType => ({type: ADD_POST,newPostBody})
 
 export const setUserProfile = (profile: UserProfileType): SetUserProfileActionType => ({
     type: 'SET-USERS-PROFILE',
     profile
 })
-export const getUserStatus = (status:string): GetStatusType => ({type: 'GET-STATUS', status})
-export const setStatus = (status:string): SetStatusType => ({type: 'SET-STATUS', status})
+export const getUserStatus = (status:string): GetStatusType => ({type: GET_STATUS, status})
+export const setStatus = (status:string): SetStatusType => ({type: SET_STATUS, status})
 
 
 export const getStatus = (userId: number) => (dispatch: Dispatch) => {

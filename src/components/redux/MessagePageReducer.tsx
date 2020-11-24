@@ -4,8 +4,8 @@ import {
     SendMessageActionType,
 } from './types';
 import {v1} from 'uuid';
-const SEND_MESSAGE= 'SEND-MESSAGE'
 
+const SEND_MESSAGE= 'SEND-MESSAGE'
 
 
 let initialState: MessagePageType = {
@@ -27,7 +27,7 @@ let initialState: MessagePageType = {
 
 const messageReducer=(state=initialState, action:ActionTypes) => {
     switch (action.type) {
-        case 'SEND-MESSAGE': {
+        case SEND_MESSAGE: {
             return {
                 ...state,
                 messageData: [...state.messageData, {id: v1(), message: action.newMessageBody}]
@@ -38,6 +38,6 @@ const messageReducer=(state=initialState, action:ActionTypes) => {
     }
 }
 
-export const sendMessageCreator = (newMessageBody:string):SendMessageActionType =>({type:'SEND-MESSAGE',newMessageBody})
+export const sendMessageCreator = (newMessageBody:string):SendMessageActionType =>({type:SEND_MESSAGE,newMessageBody})
 
 export default messageReducer
