@@ -26,12 +26,17 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
             //userId = 12000
             userId = this.props.currentUserId!
             //*
+            //system redirect
+            if (!userId){
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
-
+//redirect need to do in render
     render() {
+
         return this.props.profile
             ?
             <Profile {...this.props} profile={this.props.profile} status={this.props.status}

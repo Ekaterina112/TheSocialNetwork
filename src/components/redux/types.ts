@@ -2,6 +2,7 @@
 
 import {UsersDataType} from './UsersPageReducer';
 import {UsersAuthDataType} from './authReducer';
+import {InitilizedType} from './appReducer';
 
 export type MessageDataType = {
     message: string
@@ -24,7 +25,7 @@ export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
     profile: null | UserProfileType
-    status:string
+    status: string
 }
 export type RootStateType = {
     auth: UsersAuthDataType;
@@ -34,7 +35,7 @@ export type RootStateType = {
 
 export type AddPostsActionType = {
     type: 'ADD-POST',
-    newPostBody:string
+    newPostBody: string
 
 }
 
@@ -53,7 +54,7 @@ export type GetStatusType = {
 }
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
-    newMessageBody:string
+    newMessageBody: string
 }
 
 //FOR USERS PAGE
@@ -84,7 +85,7 @@ export type SetFetchingActionType = {
 export type SetDisabledFollowingBTNActionType = {
     type: 'SET_DISABLED_FOLLOWING_BTN',
     isFetching: boolean,
-    userID:number
+    userID: number
 }
 
 
@@ -92,14 +93,14 @@ export type SetAuthActionType = {
     type: 'SET_USER_DATA',
     payload: UsersAuthDataType
 }
-export type AuthUsersType = {
-    email: null | string,
-    id: null | number,
-    login: null | string
+//FOR APP_REDUCER
+export type SetInitialized = {
+    type: 'SET_INITIALIZED',
+    payload: InitilizedType
 }
 export type ActionTypes =
     AddPostsActionType
-    |SetUserProfileActionType
+    | SetUserProfileActionType
     | SendMessageActionType
     | FollowActionType
     | UnFollowActionType
@@ -109,10 +110,10 @@ export type ActionTypes =
     | SetFetchingActionType
     | SetAuthActionType
     | SetDisabledFollowingBTNActionType
-|SetStatusType
-|GetStatusType
+    | SetStatusType
+    | GetStatusType
+    | SetInitialized
 
-export type DispatchType = { dispatch: (action: ActionTypes) => void }
 
 export type UserProfileType = {
     aboutMe: string,
