@@ -6,6 +6,15 @@ import Users from './Users';
 import Preloader from '../common/Preloader';
 import {WithAuthRedirectComponent} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {
+    getCurrentPage,
+    getFetching,
+    getFollowingInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsersData
+} from '../redux/users_selectors';
+
 
 type UsersPropsType = MapDispatchPropsType & MapStatePropsType
 
@@ -60,12 +69,12 @@ export  type MapDispatchPropsType = {
 //которые в свою очередь берем из закомбайненого редьюсеров
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        usersData: state.usersPage.usersData, //необходимые данные
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        usersData: getUsersData(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getFetching(state) ,
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 /*//..............3...................2........................1

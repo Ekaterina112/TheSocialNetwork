@@ -130,11 +130,11 @@ export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): Se
 
 type ThunkActionType = ThunkAction<void, RootStateType, unknown, ActionTypes>;
 type ThunkDispatchType = ThunkDispatch<RootStateType, unknown, ActionTypes>;
-export const getUsers = (currentPage:number,pageSize:number):ThunkActionType => {
-
+export const getUsers = (page:number,pageSize:number):ThunkActionType => {
     return (dispatch:ThunkDispatchType) => {
         dispatch(setIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize)
             .then(data => {
                 dispatch(setIsFetching(false))
                 dispatch(setUsers(data.items))
