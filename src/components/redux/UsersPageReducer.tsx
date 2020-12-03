@@ -148,7 +148,7 @@ export const follow = (userId:number):ThunkActionType => {
         dispatch(setDisabledFollowingBTN(true, userId))
         usersAPI.postFollow(userId)
             .then(data => {
-                if (data.resultCode == 0) {
+                if (data.resultCode === 0) {
                     dispatch(followSuccess(userId))
                 }
                 dispatch(setDisabledFollowingBTN(false, userId))
@@ -161,7 +161,7 @@ export const unfollow = (userId:number):ThunkActionType => {
         dispatch(setDisabledFollowingBTN(true, userId))
         usersAPI.deleteUnfollow(userId)
             .then(data => {
-                if (data.resultCode == 0) {
+                if (data.resultCode === 0) {
                    dispatch( unfollowSuccess(userId))
                 }
                 dispatch(setDisabledFollowingBTN(false, userId))
