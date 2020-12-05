@@ -29,7 +29,9 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-
+export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirectComponent)
+(Dialogs)
 /*//............3...........................2..............1
 let AuthRedirectComponent =WithAuthRedirectComponent(Dialogs)
 //.......................................4.....................................3
@@ -38,6 +40,3 @@ const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (AuthRedi
 //2 параметром целевая
 
 
-export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirectComponent)
-(Dialogs)

@@ -27,6 +27,7 @@ export type ProfilePageType = {
     profile: null | UserProfileType
     status: string
 }
+///
 export type RootStateType = {
     auth: UsersAuthDataType;
     profilePage: ProfilePageType
