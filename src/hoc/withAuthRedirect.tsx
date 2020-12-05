@@ -13,7 +13,6 @@ type MapStateToPropsType = {
 
 export function WithAuthRedirectComponent<WCP>(WrappedComponent: React.ComponentType<WCP>) {
     //WCP wrapped component props
-
     const RedirectComponent: React.FC<MapStateToPropsType> = (props) => {
         let {isAuth, ...restProps} = props
         if (!props.isAuth) return <Redirect to={'/login'}/>
