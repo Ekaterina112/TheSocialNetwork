@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../../../App.css';
-import classes from './Post.module.css'
+
 
 type PostType = {
     message: string

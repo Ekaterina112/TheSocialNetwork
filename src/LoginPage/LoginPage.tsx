@@ -3,7 +3,7 @@ import LoginReduxForm, {FormDataType} from './LoginForm';
 import {connect} from 'react-redux';
 import {AppStateType} from '../components/redux/redux-store';
 import {login} from '../components/redux/authReducer';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 type LoginPageType = MapDispatchPropsType & MapStatePropsType
 
@@ -13,16 +13,16 @@ const LoginPage = (props: LoginPageType) => {
         //login-callback
         props.login(formData.email, formData.password, formData.rememberMe)
     }
-    if (props.isAuth){
+    if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
     return (<div>
-            <h1>Login here please</h1>
-            <LoginReduxForm onSubmit={onSubmitMy}/>
-        </div>)
+        <h1>Login here please</h1>
+        <LoginReduxForm onSubmit={onSubmitMy}/>
+    </div>)
 }
 export type MapStatePropsType = {
- isAuth:boolean
+    isAuth: boolean
 }
 
 export  type MapDispatchPropsType = { login: (email: string, password: string, rememberMe: boolean) => void }

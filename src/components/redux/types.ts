@@ -39,7 +39,11 @@ export type AddPostsActionType = {
     newPostBody: string
 
 }
+export type DeletePostActionType = {
+    type: 'DELETE_POST',
+    postId: string
 
+}
 export type SetUserProfileActionType = {
     type: 'SET-USERS-PROFILE',
     profile: UserProfileType
@@ -101,6 +105,7 @@ export type SetInitialized = {
 }
 export type ActionTypes =
     AddPostsActionType
+    | DeletePostActionType
     | SetUserProfileActionType
     | SendMessageActionType
     | FollowActionType

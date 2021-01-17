@@ -39,9 +39,3 @@ test('destrucuring', () => {
     expect(title).toBe('Odesskaya')
 })
 
-//переменная для манипуляций
-//const age=props.age
-//const lessons=props.lessons
-//идет по верхнему уровню
-//в тестах нельзя писать комментарии
-//
