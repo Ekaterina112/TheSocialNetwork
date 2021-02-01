@@ -1,7 +1,7 @@
 import React from 'react'
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {AppStateType} from '../components/redux/redux-store';
+import {AppStateType} from '../redux/redux-store';
 
 
 let mapStateToPropsForRedirect = (state: AppStateType): MapStateToPropsType => {
@@ -19,8 +19,7 @@ export function WithAuthRedirectComponent<WCP>(WrappedComponent: React.Component
         return <WrappedComponent {...restProps as WCP}/>
     }
 
-    let ConnectedRedirectComponent = connect<MapStateToPropsType, {}, WCP, AppStateType>(mapStateToPropsForRedirect)(RedirectComponent)
-    return ConnectedRedirectComponent
+    return connect<MapStateToPropsType, {}, WCP, AppStateType>(mapStateToPropsForRedirect)(RedirectComponent)
 }
 
 

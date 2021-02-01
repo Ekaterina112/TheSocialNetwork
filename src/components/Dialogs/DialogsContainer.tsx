@@ -1,11 +1,11 @@
-import React, {ComponentType} from 'react';
-import {sendMessageCreator} from '../redux/MessagePageReducer';
+import {ComponentType} from 'react';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {MessagePageType, RootStateType} from '../redux/types';
+import {MessagePageType} from '../../redux/types';
 import {compose, Dispatch} from 'redux';
 import {WithAuthRedirectComponent} from '../../hoc/withAuthRedirect';
-import {AppStateType} from '../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
+import {sendMessageCreator} from '../../redux/messagePageReducer';
 
 
 export type MapStatePropsType = {
@@ -18,7 +18,7 @@ export  type MapDispatchPropsType = {
     sendMessage: (newMessageBody: string) => void
 }
 
-let mapStateToProps = (state: RootStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {messagePage: state.messagePage}
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

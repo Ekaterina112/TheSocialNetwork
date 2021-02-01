@@ -9,14 +9,13 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import LoginPage from './LoginPage/LoginPage';
+import LoginPage from './components/LoginPage/LoginPage';
 import {connect} from 'react-redux';
-import {initializeApp} from './components/redux/appReducer';
-import {AppStateType} from './components/redux/redux-store';
+import {initializeApp} from './redux/appReducer';
+import {AppStateType} from './redux/redux-store';
 import Preloader from './components/common/Preloader';
 
 
-type PropsType = {}
 
 class App extends React.Component<any, any> {
     componentDidMount() {
@@ -54,4 +53,5 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     initialized: state.app.initialized
 })
 //need types!!!
-export default connect(mapStateToProps, {initializeApp})(App);
+//export default compose(withRouter,connect(mapStateToProps, {initializeApp})) (App);
+export default connect(mapStateToProps, {initializeApp}) (App);

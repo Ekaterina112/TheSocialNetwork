@@ -2,14 +2,14 @@ import React from 'react';
 import s from './FormController.module.css'
 
 //not understand!
-export const UniversalForm = ({input, meta, child, ...props}) => {
-    const hasError = meta.touched && meta.error
+export const UniversalForm = ({input, meta: {touched, error}, child, ...props}) => {
+    const hasError = touched && error
 
     return (<div className={s.formControl + " " + (hasError ? s.error : '')}>
         <div>
             {props.children}
         </div>
-        {hasError && <span>{meta.error}</span>}
+        {hasError && <span>{error}</span>}
     </div>)
 }
 export const Textarea = (props) => {

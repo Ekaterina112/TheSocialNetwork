@@ -1,15 +1,7 @@
-import {
-    ActionTypes,
-    FollowActionType, RootStateType,
-    SetCurrentPageActionType,
-    SetDisabledFollowingBTNActionType,
-    SetFetchingActionType,
-    SetUsersActionType,
-    SetUsersTotalCountType,
-    UnFollowActionType
-} from './types';
-import { usersAPI} from '../../API/api';
+import {ActionTypes} from './types';
+import {usersAPI} from '../API/api';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
 
 export type PhotosType = {
     'small': string | null,
@@ -31,13 +23,13 @@ export type UsersPageType = {
     followingInProgress: Array<number>
 }
 
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_USERS = 'SET-USERS'
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
-const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT'
-const SET_FETCHING = 'SET-FETCHING'
-const SET_DISABLED_FOLLOWING_BTN = 'SET_DISABLED_FOLLOWING_BTN'
+const FOLLOW = 'usersReducer/FOLLOW'
+const UNFOLLOW = 'usersReducer/UNFOLLOW'
+const SET_USERS = 'usersReducer/SET-USERS'
+const SET_CURRENT_PAGE = 'usersReducer/SET-CURRENT-PAGE'
+const SET_USERS_TOTAL_COUNT = 'usersReducer/SET-USERS-TOTAL-COUNT'
+const SET_FETCHING = 'usersReducer/SET-FETCHING'
+const SET_DISABLED_FOLLOWING_BTN = 'usersReducer/SET_DISABLED_FOLLOWING_BTN'
 let initialState: UsersPageType = {
     usersData: [],
     pageSize: 99,
@@ -112,61 +104,58 @@ const usersReducer = (state = initialState, action: ActionTypes) => {
 }
 
 //стреляет экшионы, это экшион креэйторы
-export const followSuccess = (userID: number): FollowActionType => ({type: FOLLOW, userID})
-export const unfollowSuccess = (userID: number): UnFollowActionType => ({type: UNFOLLOW, userID})
-export const setUsers = (usersData: Array<UsersDataType>): SetUsersActionType => ({type: SET_USERS, usersData})
-export const setCurrentPage = (currentPage: number): SetCurrentPageActionType => ({type: SET_CURRENT_PAGE, currentPage})
-export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({
-    type: SET_USERS_TOTAL_COUNT,
-    totalCount
-})
-export const setIsFetching = (isFetching: boolean): SetFetchingActionType => ({type: SET_FETCHING, isFetching})
-export const setDisabledFollowingBTN = (isFetching: boolean, userID: number): SetDisabledFollowingBTNActionType => ({
+export const followSuccess = (userID: number) => ({type: FOLLOW, userID}) as const
+export const unfollowSuccess = (userID: number) => ({type: UNFOLLOW, userID}) as const
+export const setUsers = (usersData: Array<UsersDataType>) => ({type: SET_USERS, usersData}) as const
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage}) as const
+export const setUsersTotalCount = (totalCount: number) => ({type: SET_USERS_TOTAL_COUNT, totalCount}) as const
+export const setIsFetching = (isFetching: boolean) => ({type: SET_FETCHING, isFetching}) as const
+export const setDisabledFollowingBTN = (isFetching: boolean, userID: number) => ({
     type: SET_DISABLED_FOLLOWING_BTN,
     isFetching,
     userID
-})
+}) as const
+
+
 //типизация для санок, если это обычная санака то dispatch:Dispatch<ActionTypes> импортируем из redux
 
-type ThunkActionType = ThunkAction<void, RootStateType, unknown, ActionTypes>;
-type ThunkDispatchType = ThunkDispatch<RootStateType, unknown, ActionTypes>;
-export const getUsers = (page:number,pageSize:number):ThunkActionType => {
-    return (dispatch:ThunkDispatchType) => {
+type ThunkActionType = ThunkAction<void, AppStateType, unknown, ActionTypes>;
+type ThunkDispatchType = ThunkDispatch<AppStateType, unknown, ActionTypes>;
+
+export const getUsers = (page: number, pageSize: number): ThunkActionType => {
+    return async (dispatch: ThunkDispatchType) => {
         dispatch(setIsFetching(true))
         dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize)
-            .then(data => {
-                dispatch(setIsFetching(false))
-                dispatch(setUsers(data.items))
-                dispatch(setUsersTotalCount(data.totalCount))
-            })
+        let data = await usersAPI.getUsers(page, pageSize)
+        dispatch(setIsFetching(false))
+        dispatch(setUsers(data.items))
+        dispatch(setUsersTotalCount(data.totalCount))
     }
 }
-export const follow = (userId:number):ThunkActionType => {
 
-    return (dispatch: ThunkDispatchType) => {
-        dispatch(setDisabledFollowingBTN(true, userId))
-        usersAPI.postFollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(setDisabledFollowingBTN(false, userId))
-            })
-    }
-}
-export const unfollow = (userId:number):ThunkActionType => {
 
-    return (dispatch: ThunkDispatchType) => {
-        dispatch(setDisabledFollowingBTN(true, userId))
-        usersAPI.deleteUnfollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                   dispatch( unfollowSuccess(userId))
-                }
-                dispatch(setDisabledFollowingBTN(false, userId))
-            })
+// why we not use one actionCreator?????????
+//refactoring
+const followUnfollowFlow = async (dispatch: ThunkDispatchType, userId: number, apiMethod: Function, actionCreator: Function) => {
+    dispatch(setDisabledFollowingBTN(true, userId))
+    let data = await apiMethod(userId)
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(setDisabledFollowingBTN(false, userId))
+}
+
+export const follow = (userId: number): ThunkActionType => {
+    return async (dispatch: ThunkDispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.postFollow.bind(usersAPI), followSuccess)
     }
 }
+
+export const unfollow = (userId: number): ThunkActionType => {
+    return async (dispatch: ThunkDispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.deleteUnfollow.bind(usersAPI), unfollowSuccess)
+    }
+}
+
 
 export default usersReducer

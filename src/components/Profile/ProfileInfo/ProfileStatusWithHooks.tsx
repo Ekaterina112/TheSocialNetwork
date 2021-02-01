@@ -6,35 +6,35 @@ type PropsType = {
     updateStatus: (status: string) => void
 }
 
-const ProfileStatusWithHooks = (props: PropsType) => {
-    let [status, setStatus] = useState<string>(props.status)
+const ProfileStatusWithHooks: React.FC<PropsType> = ({status, updateStatus,}) => {
+    let [stat, setStat] = useState<string>(status)
     let [editMode, setEditMode] = useState<boolean>(false)
 
-    useEffect(()=>{
-        setStatus(props.status)
-    },[props.status])
+    useEffect(() => {
+        setStat(status)
+    }, [status])
 
     const activatedMode = () => {
         setEditMode(true)
     }
     const deactivatedMode = () => {
         setEditMode(false)
-        props.updateStatus(status)
+        updateStatus(stat)
     }
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setStatus(e.currentTarget.value)
+        setStat(e.currentTarget.value)
     }
 
     return <div>
         <div>
             {!editMode && <span
-                onDoubleClick={activatedMode}>{status}</span>}
+                onDoubleClick={activatedMode}>{stat}</span>}
         </div>
         <div>
             {editMode && <input
                 onBlur={deactivatedMode}
                 onChange={onStatusChange}
-                value={status}/>}
+                value={stat}/>}
         </div>
 
     </div>

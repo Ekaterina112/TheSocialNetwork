@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import store from './components/redux/redux-store';
+import store from './redux/redux-store';
 
 test('renders learn react link', () => {
 

@@ -1,5 +1,5 @@
-import profileReducer, {addPostCreator, deletePostCreator} from '../components/redux/ProfilePageReducer';
-import {ProfilePageType} from '../components/redux/types';
+import profileReducer, {addPostCreator, deletePostCreator} from '../redux/profilePageReducer';
+import {ProfilePageType} from '../redux/types';
 
 let initialTestState: ProfilePageType
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import LoginReduxForm, {FormDataType} from './LoginForm';
 import {connect} from 'react-redux';
-import {AppStateType} from '../components/redux/redux-store';
-import {login} from '../components/redux/authReducer';
+import {AppStateType} from '../../redux/redux-store';
+import {login} from '../../redux/authReducer';
 import {Redirect} from 'react-router-dom';
 
 type LoginPageType = MapDispatchPropsType & MapStatePropsType

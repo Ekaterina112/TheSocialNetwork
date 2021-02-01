@@ -1,25 +1,23 @@
-import {ActionTypes} from './types';
 import {getAuthUserData} from './authReducer';
+import {Dispatch} from 'redux';
+import {ActionTypes} from './types';
 
+const SET_INITIALIZED = 'authReducer/SET_INITIALIZED'
 
-const SET_INITIALIZED = 'SET_INITIALIZED'
-
-export type InitilizedType = {
+export type InitializedType = {
     initialized: boolean,
 }
 
-
-let initialState: InitilizedType = {
+let initialState: InitializedType = {
     initialized: false,
 }
 
-
-const appReducer = (state = initialState, action: ActionTypes): InitilizedType => {
+const appReducer = (state = initialState, action: ActionTypes): InitializedType => {
     switch (action.type) {
         case SET_INITIALIZED: {
             return {
                 ...state,
-                initialized: true,
+                initialized: action.payload,
             }
         }
         default:
@@ -27,16 +25,18 @@ const appReducer = (state = initialState, action: ActionTypes): InitilizedType =
     }
 }
 //actionCreator
-export const setInitialized = () => ({type: SET_INITIALIZED})
+export const setInitialized = (payload: boolean) => ({type: SET_INITIALIZED, payload}) as const
+
 //thunkCreator
-export const initializeApp = () => (dispatch: any) => {
+export const initializeApp = () => (dispatch: Dispatch<any>) => {
     let promise = dispatch(getAuthUserData())
     //when all promises wil be resolved....then....
     Promise.all([promise])
         .then(() => {
-            dispatch(setInitialized())
+            dispatch(setInitialized(true))
         })
 }
+
 
 //dispatch return us which return from thunk
 export default appReducer

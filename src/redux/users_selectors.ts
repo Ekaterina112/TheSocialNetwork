@@ -1,4 +1,3 @@
-import React from 'react';
 import {AppStateType} from './redux-store';
 
 

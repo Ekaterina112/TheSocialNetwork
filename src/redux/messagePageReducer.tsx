@@ -1,20 +1,16 @@
-import {
-    ActionTypes,
-    MessagePageType,
-    SendMessageActionType,
-} from './types';
+import {ActionTypes, MessagePageType} from './types';
 import {v1} from 'uuid';
 
-const SEND_MESSAGE= 'SEND-MESSAGE'
+const SEND_MESSAGE = 'messageReducer/SEND-MESSAGE'
 
 
 let initialState: MessagePageType = {
     dialogItemsData: [
-        {id: 1,name: 'Kate'},
-        {id: 2,name: 'Tom'},
-        {id: 3,name: 'Kristi'},
+        {id: 1, name: 'Kate'},
+        {id: 2, name: 'Tom'},
+        {id: 3, name: 'Kristi'},
         {id: 4, name: 'Mike'},
-        {id: 5, name: 'Jeny' }
+        {id: 5, name: 'Jeny'}
     ],
     messageData: [
         {id: 1, message: 'Hi'},
@@ -25,7 +21,7 @@ let initialState: MessagePageType = {
     ],
 }
 
-const messageReducer=(state=initialState, action:ActionTypes) => {
+const messageReducer = (state = initialState, action: ActionTypes) => {
     switch (action.type) {
         case SEND_MESSAGE: {
             return {
@@ -38,6 +34,9 @@ const messageReducer=(state=initialState, action:ActionTypes) => {
     }
 }
 
-export const sendMessageCreator = (newMessageBody:string):SendMessageActionType =>({type:SEND_MESSAGE,newMessageBody})
+export const sendMessageCreator = (newMessageBody: string) => ({
+    type: SEND_MESSAGE,
+    newMessageBody
+}) as const
 
 export default messageReducer
