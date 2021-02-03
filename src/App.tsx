@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import Nav from './components/NavBar/NavBar';
-import {Route} from 'react-router-dom'
+import {BrowserRouter, Route, withRouter} from 'react-router-dom'
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -10,11 +10,11 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/LoginPage/LoginPage';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {initializeApp} from './redux/appReducer';
-import {AppStateType} from './redux/redux-store';
+import store, {AppStateType} from './redux/redux-store';
 import Preloader from './components/common/Preloader';
-
+import {compose} from 'redux';
 
 
 class App extends React.Component<any, any> {
@@ -52,6 +52,15 @@ type MapStateToPropsType = {
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     initialized: state.app.initialized
 })
-//need types!!!
-//export default compose(withRouter,connect(mapStateToProps, {initializeApp})) (App);
-export default connect(mapStateToProps, {initializeApp}) (App);
+
+let AppContainer = compose<ComponentType>(withRouter, connect(mapStateToProps, {initializeApp}))(App);
+
+
+const MainApp = () => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+export default MainApp

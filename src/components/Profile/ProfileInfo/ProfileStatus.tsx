@@ -1,6 +1,5 @@
 import React, {ChangeEvent} from 'react';
 
-//типизаця state!!!
 
 type PropsType = {
     status: string

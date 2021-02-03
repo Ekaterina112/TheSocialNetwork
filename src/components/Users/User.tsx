@@ -18,7 +18,7 @@ const User: React.FC<PropsType> = ({user, followingInProgress, follow, unfollow}
                     <span>
                         <div>
                             <NavLink to={'/profile/' + user.id}>
-                            <img alt={'here'} src={user.photos.small != null ? user.photos.small : userPhoto} width={100}
+                            <img alt={'here avatar'} src={user.photos.small != null ? user.photos.small : userPhoto} width={100}
                                  height={100}/>
                             </NavLink>
                         </div>
