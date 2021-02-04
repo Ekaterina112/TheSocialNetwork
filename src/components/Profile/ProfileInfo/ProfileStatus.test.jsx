@@ -36,8 +36,9 @@ describe('Tests for ProfileStatus Component', () => {
         expect(input.props.value).toBe('you are awesome')
     });
     test('callback should be called', () => {
-        const mockCallback=jest.fn()
-        const testRenderer = TestRenderer.create(<ProfileStatus status={'you are awesome'} updateStatus={mockCallback}/>);
+        const mockCallback = jest.fn()
+        const testRenderer = TestRenderer.create(<ProfileStatus status={'you are awesome'}
+                                                                updateStatus={mockCallback}/>);
         const testInstance = testRenderer.getInstance();
         testInstance.deactivatedMode()
         expect(mockCallback.mock.calls.length).toBe(1)

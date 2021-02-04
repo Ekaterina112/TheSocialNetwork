@@ -18,8 +18,8 @@ type PropsType = {
 
 const Users: React.FC<PropsType> = ({totalUsersCount, pageSize, currentPage, onPageChanged, usersData, followingInProgress, unfollow, follow}) => {
     return <div>
-        <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} currentPage={currentPage}
-                   onPageChanged={onPageChanged}/>
+        <Paginator totalItemsCount={totalUsersCount} pageSize={pageSize} currentPage={currentPage}
+                   onPageChanged={onPageChanged} portionSize={10}/>
         <div>
             {
                 usersData.map(u => <User key={u.id} user={u} follow={follow} unfollow={unfollow}

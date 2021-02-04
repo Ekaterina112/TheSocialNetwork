@@ -32,7 +32,7 @@ const SET_FETCHING = 'usersReducer/SET-FETCHING'
 const SET_DISABLED_FOLLOWING_BTN = 'usersReducer/SET_DISABLED_FOLLOWING_BTN'
 let initialState: UsersPageType = {
     usersData: [],
-    pageSize: 99,
+    pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
