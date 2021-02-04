@@ -10,6 +10,21 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({status, updateStatus,}) =>
     let [stat, setStat] = useState<string>(status)
     let [editMode, setEditMode] = useState<boolean>(false)
 
+    let pr1 = new Promise((res) => {
+        res(10)
+    })
+    let pr2 = new Promise((res) => {
+        res(0)
+    })
+    pr1.then((res: any) => {
+        console.log(res);
+        return res + 2
+    }).then(console.log);
+    pr2.then((res: any) => {
+        console.log(res);
+        return res + 1
+    }).then(console.log)
+
     useEffect(() => {
         setStat(status)
     }, [status])
