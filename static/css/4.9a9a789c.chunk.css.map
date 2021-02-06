@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/Profile/ProfileInfo/ProfileInfo.module.css"],"names":[],"mappings":"AACA,4BACI,WAEJ,CACA,2BACI,SACJ","file":"4.9a9a789c.chunk.css","sourcesContent":["\r\n.profile {\r\n    grid-area: c;\r\n\r\n}\r\n.avatar {\r\n    color: red;\r\n}"]}
