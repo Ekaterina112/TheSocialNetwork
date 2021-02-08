@@ -1,7 +1,14 @@
 //SAVE SOME TYPES //ONLY FOR TYPES
 import {setAuthUsersData} from './authReducer';
 import {sendMessageCreator} from './messagePageReducer';
-import {addPostCreator, deletePostCreator, getUserStatus, setStatus, setUserProfile} from './profilePageReducer';
+import {
+    addPostCreator,
+    deletePostCreator,
+    getUserStatus,
+    setPhoto,
+    setStatus,
+    setUserProfile
+} from './profilePageReducer';
 import {setInitialized} from './appReducer';
 import {
     followSuccess,
@@ -55,6 +62,7 @@ export type ActionTypes =
     | ReturnType<typeof setInitialized>
     | ReturnType<typeof setAuthUsersData>
     | ReturnType<typeof sendMessageCreator>
+    | ReturnType<typeof setPhoto>
 
 
 export type UserProfileType = {
@@ -74,8 +82,8 @@ export type UserProfileType = {
     fullName: string,
     userId: number,
     photos: {
-        small: string,
-        large: string
+        small: string | null
+        large: string | null
     }
 }
 

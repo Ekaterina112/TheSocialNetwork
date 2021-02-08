@@ -1,9 +1,9 @@
-import React, {ComponentType} from 'react';
+import React, {ChangeEvent, ComponentType} from 'react';
 import '../../App.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {getStatus, getUserProfile, updateStatus} from '../../redux/profilePageReducer';
+import {getStatus, getUserProfile, savePhoto, updateStatus} from '../../redux/profilePageReducer';
 import {UserProfileType} from '../../redux/types';
 import Preloader from '../common/Preloader';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
@@ -20,27 +20,37 @@ type PathParamType = {
 type CommonUsersProfilePropsType = RouteComponentProps<PathParamType> & UsersProfilePropsType
 
 class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
-    componentDidMount() {
+    refreshProfile() {
         let userId = Number(this.props.match.params.userId)
         if (!userId) {
             //userId = 12000
             userId = this.props.currentUserId!
             //*
             //system redirect
-            if (!userId){
+            if (!userId) {
                 this.props.history.push('/login')
             }
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
-//redirect need to do in render
-    render() {
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<CommonUsersProfilePropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+
+    }
+
+    render() {
         return this.props.profile
             ?
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status}
-                     updateStatus={this.props.updateStatus}/>
+            <Profile isOwner={!this.props.match.params.userId} {...this.props} profile={this.props.profile} status={this.props.status}
+                     updateStatus={this.props.updateStatus} savePhoto={this.props.savePhoto}/>
             : <Preloader/>
     }
 }
@@ -56,6 +66,7 @@ export  type MapDispatchPropsType = {
     getUserProfile: (userId: number) => void
     getStatus: (userId: number) => void
     updateStatus: (status: string) => void
+    savePhoto:(p:any)=>void
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -78,7 +89,8 @@ export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType
 export default compose<ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
         getUserProfile,
         getStatus,
-        updateStatus
+        updateStatus,
+        savePhoto
     }),
     withRouter,
     WithAuthRedirectComponent)

@@ -8,12 +8,14 @@ import {UserProfileType} from '../../redux/types';
 type PropsType = {
     profile: UserProfileType
     status: string,
-    updateStatus: (status: string) => void
+    updateStatus: (status: string) => void,
+    isOwner:boolean,
+    savePhoto:(file:any)=>void
 }
 
-const Profile: React.FC<PropsType> = ({profile, status, updateStatus}) => {
+const Profile: React.FC<PropsType> = ({profile, status, updateStatus, isOwner,savePhoto}) => {
     return <div>
-        <ProfileInfo profile={profile} status={status} updateStatus={updateStatus}/>
+        <ProfileInfo savePhoto={savePhoto} isOwner={isOwner}  profile={profile} status={status} updateStatus={updateStatus}/>
         <MyPostsContainer/>
     </div>
 }
