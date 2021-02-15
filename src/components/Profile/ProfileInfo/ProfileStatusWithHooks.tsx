@@ -26,6 +26,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({status, updateStatus,}) =>
     }
     return <div>
         <div>
+            <b>Status:</b>
             {!editMode && <span
                 onDoubleClick={activatedMode}>{stat}</span>}
         </div>
