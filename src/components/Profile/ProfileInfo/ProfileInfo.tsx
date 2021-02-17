@@ -6,18 +6,19 @@ import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 import ProfileData from './ProfileData/ProfileData';
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
 import userPhoto from '../../../avatar.jpg';
-import {FormDataType} from '../../LoginPage/LoginForm';
+
 
 type PropsType = {
     profile: UserProfileType
     status: string
     updateStatus: (status: string) => void,
     isOwner: boolean,
-    savePhoto: (file: any) => void
+    savePhoto: (file: any) => void,
+    saveNewProfileData: (formData: any) => void
 }
 
 
-const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto}) => {
+const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveNewProfileData}) => {
     let [editMode, setEditMode] = useState<boolean>(false)
     const openEditMode = () => setEditMode(true)
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +28,8 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
             savePhoto(e.target.files[0])
         }
     }
-    const onSubmitEdit = (formData:any) => {
-        //будет диспатчи
-       console.log(formData)
+    const onSubmitEdit = (formData: any) => {
+        saveNewProfileData(formData)
     }
 
     if (!profile) {
@@ -39,7 +39,7 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
         <img src={profile.photos.large != null ? profile.photos.large : userPhoto} alt={'here avatar'}/>
         {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
         {editMode
-            ? <ProfileDataForm onSubmit={onSubmitEdit} />
+            ? <ProfileDataForm onSubmit={onSubmitEdit}/>
             : <ProfileData profile={profile} isOwner={isOwner} openEditMode={openEditMode}/>}
         <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
     </div>
