@@ -2,6 +2,9 @@ import {ActionTypes, PostDataType, ProfilePageType, UserProfileType} from './typ
 import {Dispatch} from 'redux';
 import {profileAPI, usersAPI} from '../API/api';
 import {v1} from 'uuid';
+import {AppStateType} from './redux-store';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {stopSubmit} from 'redux-form';
 
 
 const ADD_POST = 'profileReducer/ADD-POST';
@@ -93,11 +96,23 @@ export const savePhoto = (file: string) => async (dispatch: Dispatch<ActionTypes
         dispatch(setPhoto(response.data.data.photos))
     }
 }
-export const saveNewProfileData = (formData: any) => async (dispatch: Dispatch<ActionTypes>) => {
-    let response = await profileAPI.saveNewProfileData(formData)
-    if (response.data.resultCode === 0) {
-        //dispatch())
+//TYPES FOR THUNK
+type ThunkActionType = ThunkAction<void, AppStateType, unknown, ActionTypes>;
+type ThunkDispatchType = ThunkDispatch<AppStateType, unknown, ActionTypes>;
+
+export const saveNewProfileData = (formData: any): ThunkActionType => {
+    return async (dispatch: ThunkDispatchType, getState: () => AppStateType) => {
+        const userId = getState().auth.id
+        const response = await profileAPI.saveNewProfileData(formData)
+        if (response.data.resultCode === 0) {
+            if (userId !== null) {
+                dispatch(getUserProfile(userId))
+            }
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+            dispatch(stopSubmit('edit-mode-profile', {_error: message}))
+            return Promise.reject(message)
+        }
     }
 }
-
 export default profileReducer
