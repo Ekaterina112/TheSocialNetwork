@@ -1,5 +1,5 @@
 //SAVE SOME TYPES //ONLY FOR TYPES
-import {setAuthUsersData} from './authReducer';
+import {getCaptchaUrlSuccess, setAuthUsersData} from './authReducer';
 import {sendMessageCreator} from './messagePageReducer';
 import {
     addPostCreator,
@@ -63,6 +63,7 @@ export type ActionTypes =
     | ReturnType<typeof setAuthUsersData>
     | ReturnType<typeof sendMessageCreator>
     | ReturnType<typeof setPhoto>
+    | ReturnType<typeof getCaptchaUrlSuccess>
 
 
 export type UserProfileType = {
