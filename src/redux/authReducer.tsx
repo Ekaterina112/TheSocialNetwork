@@ -80,9 +80,13 @@ export const logout = () => async (dispatch: Dispatch<ActionTypes>) => {
     }
 }
 export const getCaptcha = () => async (dispatch: Dispatch<ActionTypes>) => {
-    let response = await securityAPI.getCaptcha()
-    const captchaUrl = response.data.url
-    dispatch(getCaptchaUrlSuccess(captchaUrl))
+    try {
+        let response = await securityAPI.getCaptcha()
+        const captchaUrl = response.data.url
+        dispatch(getCaptchaUrlSuccess(captchaUrl))
+    } catch {
+     //here need to add modal for errors
+    }
 }
 
 export default authReducer
