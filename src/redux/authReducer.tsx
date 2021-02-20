@@ -28,6 +28,7 @@ let initialState: UsersAuthDataType = {
 
 const authReducer = (state = initialState, action: ActionTypes): UsersAuthDataType => {
     switch (action.type) {
+        case GET_CAPTCHA_URL_SUCCESS:
         case SET_USER_DATA: {
             return {
                 ...state,
@@ -40,8 +41,8 @@ const authReducer = (state = initialState, action: ActionTypes): UsersAuthDataTy
 }
 //actionCreator
 export const setAuthUsersData = (payload: UsersAuthDataType) => ({type: SET_USER_DATA, payload}) as const
-export const getCaptchaUrlSuccess = (payload: any) => ({
-    type: GET_CAPTCHA_URL_SUCCESS, payload
+export const getCaptchaUrlSuccess = (captchaUrl: string) => ({
+    type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}
 }) as const
 
 
@@ -81,7 +82,7 @@ export const logout = () => async (dispatch: Dispatch<ActionTypes>) => {
 export const getCaptcha = () => async (dispatch: Dispatch<ActionTypes>) => {
     let response = await securityAPI.getCaptcha()
     const captchaUrl = response.data.url
-    dispatch(getCaptchaUrlSuccess({captchaUrl}))
+    dispatch(getCaptchaUrlSuccess(captchaUrl))
 }
 
 export default authReducer
