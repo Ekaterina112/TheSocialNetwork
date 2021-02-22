@@ -2,7 +2,7 @@ import {ActionTypes} from './types';
 import {usersAPI} from '../API/api';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
-
+//types
 export type PhotosType = {
     'small': string | null,
     'large': string | null,
@@ -22,7 +22,7 @@ export type UsersPageType = {
     isFetching: boolean,
     followingInProgress: Array<number>
 }
-
+//actions
 const FOLLOW = 'usersReducer/FOLLOW'
 const UNFOLLOW = 'usersReducer/UNFOLLOW'
 const SET_USERS = 'usersReducer/SET-USERS'
@@ -30,6 +30,8 @@ const SET_CURRENT_PAGE = 'usersReducer/SET-CURRENT-PAGE'
 const SET_USERS_TOTAL_COUNT = 'usersReducer/SET-USERS-TOTAL-COUNT'
 const SET_FETCHING = 'usersReducer/SET-FETCHING'
 const SET_DISABLED_FOLLOWING_BTN = 'usersReducer/SET_DISABLED_FOLLOWING_BTN'
+
+
 let initialState: UsersPageType = {
     usersData: [],
     pageSize: 20,
@@ -42,7 +44,7 @@ let initialState: UsersPageType = {
 // по названию экшиона определяютя действия, для изменения стэйта
 // и возвращается измененный стэйт
 
-const usersReducer = (state = initialState, action: ActionTypes) => {
+const usersReducer = (state = initialState, action: ActionTypes): UsersPageType => {
     switch (action.type) {
         case FOLLOW: {
             return {

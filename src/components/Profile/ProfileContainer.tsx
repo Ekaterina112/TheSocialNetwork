@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ComponentType} from 'react';
+import React, {ComponentType} from 'react';
 import '../../App.css';
 import Profile from './Profile';
 import {connect} from 'react-redux';
@@ -49,7 +49,8 @@ class ProfileContainer extends React.Component<CommonUsersProfilePropsType> {
     render() {
         return this.props.profile
             ?
-            <Profile isOwner={!this.props.match.params.userId} {...this.props} profile={this.props.profile} status={this.props.status}
+            <Profile isOwner={!this.props.match.params.userId} {...this.props} profile={this.props.profile}
+                     status={this.props.status}
                      updateStatus={this.props.updateStatus} savePhoto={this.props.savePhoto}/>
             : <Preloader/>
     }
@@ -66,8 +67,8 @@ export  type MapDispatchPropsType = {
     getUserProfile: (userId: number) => void
     getStatus: (userId: number) => void
     updateStatus: (status: string) => void
-    savePhoto:(p:any)=>void
-    saveNewProfileData:(formData:any)=>void
+    savePhoto: (p: any) => void
+    saveNewProfileData: (formData: any) => void
 }
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {

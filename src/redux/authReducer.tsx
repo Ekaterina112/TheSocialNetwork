@@ -6,27 +6,23 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 
 
+//types
+export type UsersAuthDataType = typeof initialState;
+
+//actions
 const SET_USER_DATA = 'authReducer/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'authReducer/GET_CAPTCHA_URL_SUCCESS'
 
-export type UsersAuthDataType = {
-    email: null | string,
-    id: null | number,
-    login: null | string,
-    isAuth: boolean,
-    captchaUrl: null | string,
-}
-
-let initialState: UsersAuthDataType = {
-    email: null,
-    id: null,
-    login: null,
+let initialState = {
+    email: null as string | null,
+    id: null as number | null,
+    login: null as string | null,
     isAuth: false,
-    captchaUrl: null,
+    captchaUrl: null as string | null,
 }
 
 
-const authReducer = (state = initialState, action: ActionTypes): UsersAuthDataType => {
+const authReducer = (state: UsersAuthDataType = initialState, action: ActionTypes): UsersAuthDataType => {
     switch (action.type) {
         case GET_CAPTCHA_URL_SUCCESS:
         case SET_USER_DATA: {
@@ -85,7 +81,7 @@ export const getCaptcha = () => async (dispatch: Dispatch<ActionTypes>) => {
         const captchaUrl = response.data.url
         dispatch(getCaptchaUrlSuccess(captchaUrl))
     } catch {
-     //here need to add modal for errors
+        //here need to add modal for errors
     }
 }
 

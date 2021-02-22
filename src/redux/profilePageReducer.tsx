@@ -1,4 +1,4 @@
-import {ActionTypes, PostDataType, ProfilePageType, UserProfileType} from './types';
+import {ActionTypes, UserProfileType} from './types';
 import {Dispatch} from 'redux';
 import {profileAPI, usersAPI} from '../API/api';
 import {v1} from 'uuid';
@@ -6,7 +6,10 @@ import {AppStateType} from './redux-store';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
 
-
+//types
+export type ProfilePageType = typeof initialState
+export type PostDataType = { id: string, message: string, count: number }
+//actions
 const ADD_POST = 'profileReducer/ADD-POST';
 const SET_USERS_PROFILE = 'profileReducer/SET-USERS-PROFILE';
 const SET_STATUS = 'profileReducer/SET-STATUS';
@@ -14,12 +17,12 @@ const SET_PHOTO = 'profileReducer/SET-PHOTO';
 const GET_STATUS = 'profileReducer/GET-STATUS';
 const DELETE_POST = 'profileReducer/DELETE_POST';
 
-let initialState: ProfilePageType = {
+let initialState = {
     postData: [
         {id: v1(), message: 'Hello', count: 100},
         {id: v1(), message: 'How are you', count: 99},
         {id: v1(), message: 'I am fine', count: 98},
-    ],
+    ] as Array<PostDataType>,
     newPostText: 'it-kamasutra.com',
     profile: null as UserProfileType | null,
     status: ''

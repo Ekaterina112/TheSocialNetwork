@@ -2,11 +2,13 @@ import {getAuthUserData} from './authReducer';
 import {Dispatch} from 'redux';
 import {ActionTypes} from './types';
 
-const SET_INITIALIZED = 'authReducer/SET_INITIALIZED'
-
+//types
 export type InitializedType = {
     initialized: boolean,
 }
+
+//actions
+const SET_INITIALIZED = 'authReducer/SET_INITIALIZED'
 
 let initialState: InitializedType = {
     initialized: false,

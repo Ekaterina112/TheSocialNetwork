@@ -21,31 +21,6 @@ import {
 } from './usersPageReducer';
 
 
-export type MessageDataType = {
-    message: string
-    id?: number
-}
-export type DialogItemDataType = {
-    name: string
-    id: number
-}
-export type PostDataType = {
-    id: string
-    message: string
-    count: number
-}
-export type MessagePageType = {
-    dialogItemsData: Array<DialogItemDataType>
-    messageData: Array<MessageDataType>
-}
-export type ProfilePageType = {
-    postData: Array<PostDataType>
-    newPostText: string
-    profile: null | UserProfileType
-    status: string
-}
-
-
 export type ActionTypes =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof deletePostCreator>
