@@ -6,8 +6,8 @@ type PropsType = {
     totalItemsCount: number,
     pageSize: number,
     currentPage: number,
+    portionSize: number,
     onPageChanged: (p: number) => void,
-    portionSize: number
 }
 
 

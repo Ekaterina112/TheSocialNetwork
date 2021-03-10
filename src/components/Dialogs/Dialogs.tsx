@@ -22,6 +22,7 @@ const Dialogs = (props: DialogsPropsType) => {
     const onSendMessageClick = (value:any) => {
         // field name
         props.sendMessage(value.newMessageBody)
+        //console.log(value)
     }
 
 
@@ -33,7 +34,8 @@ const Dialogs = (props: DialogsPropsType) => {
             <div className={s.messages}>
                 {messageArr}
             </div>
-          <DialogsReduxForm onSubmit={onSendMessageClick}/>
+           <DialogsReduxForm onSubmit={onSendMessageClick}/>
+            <h2>this page in progress...</h2>
         </div>
     )
 }

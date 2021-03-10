@@ -119,8 +119,7 @@ export const setDisabledFollowingBTN = (isFetching: boolean, userID: number) => 
 }) as const
 
 
-//типизация для санок, если это обычная санака то dispatch:Dispatch<ActionTypes> импортируем из redux
-
+//типизация для санок, если это обычная санка то dispatch:Dispatch<ActionTypes> импортируем из redux
 type ThunkActionType = ThunkAction<void, AppStateType, unknown, ActionTypes>;
 type ThunkDispatchType = ThunkDispatch<AppStateType, unknown, ActionTypes>;
 
