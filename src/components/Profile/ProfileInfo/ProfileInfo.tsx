@@ -40,14 +40,25 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
     }
 
     return <div className={c.profile}>
-        <img src={profile.photos.large != null ? profile.photos.large : userPhoto} alt={'here avatar'}/>
-        {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
-        {editMode
-            ? <ProfileDataForm profile={profile}
-                               initialValues={profile}
-                               onSubmit={onSubmitEdit}/>
-            : <ProfileData profile={profile} isOwner={isOwner} openEditMode={openEditMode}/>}
-        <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+        <div className={c.photoBlock}>
+            <img src={profile.photos.large != null ? profile.photos.large : userPhoto} alt={'here avatar'}/>
+            {isOwner &&
+                <div className={c.label}>
+                    <label htmlFor="upload-photo">change photo</label>
+                    <input type="file" name="photo" id="upload-photo" onChange={onMainPhotoSelected} className={c.input} />
+                </div>
+            }
+        </div>
+        <div className={c.profileBlock}>
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+            <div>
+                {editMode
+                    ? <ProfileDataForm profile={profile}
+                                       initialValues={profile}
+                                       onSubmit={onSubmitEdit}/>
+                    : <ProfileData profile={profile} isOwner={isOwner} openEditMode={openEditMode}/>}
+            </div>
+        </div>
     </div>
 }
 

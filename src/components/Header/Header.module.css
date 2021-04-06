@@ -1,12 +1,17 @@
-
-
 .header {
-    color: wheat;
-    grid-area: h;
-    background-color: black;
-    font-palette: light;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0;
 }
+
+.logo {
+
+}
+
 .login {
-    float: right;
-    color: wheat;
+
 }

@@ -1,8 +1,47 @@
+img {
+    width: 100%;
+    height: 89%;
+    object-fit: cover;
+}
 
 .profile {
-    grid-area: c;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.photoBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    margin: 15px;
+    background-color: white;
+    padding: 15px;
+    position: relative;
 
 }
-.avatar {
-    color: red;
+
+.label {
+    cursor: pointer;
+    background-color: #b7ceef;
+    width: 100%;
+    height: 10%;
+    /* Style as you please, it will become the visible UI component. */
 }
+
+.input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.profileBlock {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin: 15px;
+    background-color: white;
+    padding: 15px;
+}
+

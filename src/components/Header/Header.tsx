@@ -10,11 +10,13 @@ type PropsType = {
 
 const Header = (props: PropsType) => {
     return <header className={classes.header}>
-        Whats uP!
+        <div className={classes.logo}>
+           The Social Network
+        </div>
         <div className={classes.login}>
             {props.isAuth ? <div>{props.login } <button  onClick={props.logout}>Log Out</button></div>
                 :
-                <NavLink to={'/login'} className={classes.login}> 
+                <NavLink to={'/login'} className={classes.login}>
                     Login
                 </NavLink>}
         </div>

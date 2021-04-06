@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-
+import s from './../ProfileInfo.module.css'
+import {Input} from "antd";
 
 type PropsType = {
     status: string
@@ -24,18 +25,14 @@ const ProfileStatusWithHooks: React.FC<PropsType> = ({status, updateStatus,}) =>
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStat(e.currentTarget.value)
     }
-    return <div>
-        <div>
+    return <div className={s.status}>
             <b>Status:</b>
             {!editMode && <span
                 onDoubleClick={activatedMode}>{stat}</span>}
-        </div>
-        <div>
-            {editMode && <input
-                onBlur={deactivatedMode}
-                onChange={onStatusChange}
-                value={stat}/>}
-        </div>
+            {editMode && <Input onBlur={deactivatedMode}
+                                onChange={onStatusChange}
+                                value={stat} placeholder="Borderless" bordered={false} />
+            }
     </div>
 }
 

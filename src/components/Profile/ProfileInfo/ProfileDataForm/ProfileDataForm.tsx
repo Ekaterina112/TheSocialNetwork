@@ -5,6 +5,7 @@ import {required} from '../../../../utilits/validators/postFormValidators';
 import {Textarea} from '../../../common/formController/FormController';
 import {UserProfileType} from '../../../../redux/types';
 import s from '../../../LoginPage/LoginPage.module.css';
+import {Button} from "antd";
 
 
 export  type FormDataType = {}
@@ -15,7 +16,7 @@ export  type IProps = {
 
 const ProfileDataForm: React.FC<InjectedFormProps<FormDataType, IProps> & IProps> = ({handleSubmit, profile, error}) => {
     return <form onSubmit={handleSubmit}>
-        <button>SAVE</button>
+        <Button>SAVE</Button>
         {error && <div className={s.formControlSummaryError}>
             {error}
         </div>}
