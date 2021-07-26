@@ -4,16 +4,14 @@ import {connect, Provider} from 'react-redux';
 import {HashRouter, Redirect, Route, Switch, withRouter, Link} from 'react-router-dom';
 import './App.css';
 import News from './components/News/News';
-import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import LoginPage from './components/LoginPage/LoginPage';
 import UsersContainer from './components/Users/UsersContainer';
 import {initializeApp} from './redux/appReducer';
 import store, {AppStateType} from './redux/redux-store';
 import Preloader from './components/common/Preloader';
-import {Breadcrumb, Layout, Menu} from "antd";
+import {Layout, Menu} from "antd";
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
-import HeaderOwn from "./components/Header/Header";
 import HeaderContainer from "./components/Header/HeaderContainer";
 
 
@@ -23,6 +21,7 @@ const {Header, Content, Sider} = Layout;
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
+const ChatPage = lazy(() => import('./pages/chatPage/chatPage'));
 
 class App extends React.Component<any, any> {
     catchAllUnhandledErrors = () => {
@@ -45,7 +44,7 @@ class App extends React.Component<any, any> {
         return (
             <Layout>
                 <Header className="header" style={{backgroundColor: '#ffff', lineHeight: '5vh'}}>
-                   <HeaderContainer/>
+                    <HeaderContainer/>
                 </Header>
                 <Layout>
                     <Sider width={200} className="site-layout-background">
@@ -64,9 +63,9 @@ class App extends React.Component<any, any> {
                                 <Menu.Item key="5"> <Link to='/users'>Users</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" icon={<NotificationOutlined/>} title="...in progress">
-                                <Menu.Item key="9"> <Link to='/music'>Music</Link></Menu.Item>
-                                <Menu.Item key="10"> <Link to='/music'>News</Link></Menu.Item>
-                                <Menu.Item key="11"> <Link to='/music'>Settings</Link></Menu.Item>
+                                <Menu.Item key="9"> <Link to='/chat'>Chat</Link></Menu.Item>
+                                <Menu.Item key="10"> <Link to='/news'>News</Link></Menu.Item>
+                                <Menu.Item key="11"> <Link to='/settings'>Settings</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
@@ -83,7 +82,9 @@ class App extends React.Component<any, any> {
                                 <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
                                 <Route path='/users' render={() => <UsersContainer/>}/>
                                 <Route path='/news' render={() => <News/>}/>
-                                <Route path='/music' render={() => <Music/>}/>
+                                <Route path='/chat'
+                                       render={() => <Suspense fallback={<div>Загрузка...</div>}><ChatPage/>
+                                       </Suspense>}/>
                                 <Route path='/settings' render={() => <Settings/>}/>
                                 <Route path='/login' render={() => <LoginPage/>}/>
                                 <Route path='/dialogs'
