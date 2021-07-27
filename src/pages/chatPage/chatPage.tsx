@@ -6,7 +6,7 @@ interface IMessage {
     userId: string,
     userName: string,
     message: string,
-    photo: null | string
+    photo:  string
 }
 
 //open channel
@@ -25,7 +25,6 @@ const Chat = () => {
 
     return (
         <>
-
             <Messages/>
             <MessageForm/>
         </>
@@ -59,8 +58,13 @@ const Messages = () => {
 const Message: React.FC<IMessage> = ({userName, message, photo}) => {
     return (
         <div>
-            {userName}
-            {message}
+            <img src={photo} width="50px" height='50px'/>
+            <span>
+                {userName}
+            </span>
+            <span>
+                 {message}
+            </span>
         </div>
     );
 };
